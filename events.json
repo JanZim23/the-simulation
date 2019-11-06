@@ -1,0 +1,14 @@
+[
+  {
+    "name": "New Technology",
+    "description": "A new technology has been invented!",
+    "triggers": [["renewable_enery", 100]],
+    "effects": [["global_temperature", -2], ["deficit", -80]]
+  },
+  {
+    "name": "Natural Disaster",
+    "description": "A natural disaster occured!",
+    "triggers": [["renewable_enery", 100]],
+    "effects": [["global_temperature", -2], ["deficit", -80]]
+  }
+]

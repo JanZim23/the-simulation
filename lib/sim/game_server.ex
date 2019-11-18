@@ -11,6 +11,10 @@ defmodule Sim.GameServer do
     |> initial_state()
   end
 
+  defcall get_state(), state: state do
+    reply(state)
+  end
+
   defcast sign_up(id, name), state: state do
     state
     |> State.add_player(id, name)

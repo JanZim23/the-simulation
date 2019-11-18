@@ -17,6 +17,8 @@ defmodule SimWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    get "/state/:id", StateController, :show
   end
 
   # Other scopes may use custom stacks.

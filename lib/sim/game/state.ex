@@ -94,7 +94,7 @@ defmodule Sim.Game.State do
     players
     |> Map.values()
     |> Enum.count(&Player.game_over?/1) > player_count / 2 or
-      global_temp > 26.1 or
+      global_temp > 1.5 or
       safety < 50
   end
 

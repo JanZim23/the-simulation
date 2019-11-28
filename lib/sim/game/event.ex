@@ -9,5 +9,7 @@ defmodule Sim.Event do
     |> Enum.any?(fn [key, value] -> Map.get(spending, key) < value end)
   end
 
-  def apply_effect()
+  def apply_effect(event, metrics) do
+    metrics
+  end
 end

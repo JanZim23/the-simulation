@@ -27,4 +27,29 @@ defmodule Sim.Application do
     SimWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  defimpl Jason.Encoder, for: Sim.Game.State do
+    def encode(x, opts),
+      do: x |> Map.from_struct() |> Map.drop([:tick_timer]) |> Jason.Encoder.encode(opts)
+  end
+
+  defimpl Jason.Encoder, for: Sim.Game.Metrics do
+    def encode(x, opts), do: x |> Map.from_struct() |> Jason.Encoder.encode(opts)
+  end
+
+  defimpl Jason.Encoder, for: Sim.Game.Spending do
+    def encode(x, opts), do: x |> Map.from_struct() |> Jason.Encoder.encode(opts)
+  end
+
+  defimpl Jason.Encoder, for: Sim.Game.Player do
+    def encode(x, opts), do: x |> Map.from_struct() |> Jason.Encoder.encode(opts)
+  end
+
+  defimpl Jason.Encoder, for: Sim.Event do
+    def encode(x, opts), do: x |> Map.from_struct() |> Jason.Encoder.encode(opts)
+  end
+
+  defimpl Jason.Encoder, for: Tuple do
+    def encode({a, b}, opts), do: [a, b] |> Jason.Encoder.encode(opts)
+  end
 end

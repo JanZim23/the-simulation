@@ -34,6 +34,12 @@ defmodule Sim.GameServer do
     |> new_state()
   end
 
+  defcast next_event(), state: state do
+    state
+    |> State.next_event()
+    |> new_state()
+  end
+
   defcast vote(player_id, voted_for), state: state do
     state |> State.cast_vote(player_id, voted_for) |> new_state()
   end

@@ -17,12 +17,11 @@ defmodule SimWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/api", SimWeb do
+    pipe_through :api
 
     get "/state/:id", StateController, :show
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", SimWeb do
-  #   pipe_through :api
-  # end
 end

@@ -1,0 +1,78 @@
+{
+  "approval": {},
+  "deltas": {
+    "cost_of_living": 0.1855,
+    "global_temp": 0.0043,
+    "safety": -0.0016,
+    "tax": 21.0,
+    "total_expenditures": 2740.0
+  },
+  "game_over": true,
+  "id": "test",
+  "metrics": {
+    "cost_of_living": 701.487,
+    "global_temp": 24.032,
+    "safety": 98.984,
+    "tax": 21.0,
+    "total_expenditures": 2740.0
+  },
+  "players": {
+    "bob": {
+      "approves": true,
+      "budget": 10219.47,
+      "expenses": { "cost_of_living": 701.487, "tax": 2903.04 },
+      "game_over?": false,
+      "income": 13824.0,
+      "name": "b",
+      "priorities": []
+    },
+    "jan": {
+      "approves": true,
+      "budget": 2951.47,
+      "expenses": { "cost_of_living": 701.487, "tax": 971.04 },
+      "game_over?": false,
+      "income": 4624.0,
+      "name": "J",
+      "priorities": []
+    }
+  },
+  "president": null,
+  "remaining_events": [
+    {
+      "description": null,
+      "effect": null,
+      "text": null,
+      "triggers": null,
+      "description": "A new technology has been invented!",
+      "effects": [
+        ["global_temperature", -1],
+        ["deficit", -80]
+      ],
+      "name": "New Technology",
+      "triggers": [["renewable_enery", 100]]
+    },
+    {
+      "description": null,
+      "effect": null,
+      "text": null,
+      "triggers": null,
+      "description": "A natural disaster occured!",
+      "effects": [
+        ["global_temperature", -2],
+        ["tax", -1]
+      ],
+      "name": "Natural Disaster",
+      "triggers": [["renewable_enery", 100]]
+    }
+  ],
+  "senate": [],
+  "spending": {
+    "climate": 0,
+    "education": 73,
+    "health": 1300,
+    "military": 500,
+    "welfare": 867
+  },
+  "tick": 8,
+  "votes": {}
+}

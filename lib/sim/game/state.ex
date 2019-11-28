@@ -1,17 +1,20 @@
 defmodule Sim.Game.State do
   alias Sim.Game.{Player, Spending, Metrics, Messages}
 
+  # One event every 2 minutes
+  @event_rate 120
+
   defstruct [
     :id,
     :tick_timer,
     tick: 0,
     spending: %Spending{},
     metrics: %Metrics{},
-    detlas: %{},
+    deltas: %{},
     president: nil,
     senate: [],
     players: %{},
-    remaining_events: [],
+    remaining_events: Sim.EventProvider.get_events(),
     votes: %{},
     approval: %{},
     game_over: false
@@ -64,10 +67,17 @@ defmodule Sim.Game.State do
     state
     |> Map.update!(:tick, &(&1 + 1))
     |> Map.put(:metrics, Metrics.apply_detlas(metrics, deltas))
-    |> Map.put(:deltas, Spending.get_delta_change(deltas))
+    |> Map.put(:deltas, Spending.get_delta_change(deltas) |> Enum.into(%{}))
+    |> check_next_event()
     |> update_player_budget()
     |> check_game_over()
   end
+
+  def check_next_event(%__MODULE__{tick: tick} = state) when rem(tick, @event_rate) == 0 do
+    next_event(state)
+  end
+
+  def check_next_event(state), do: state
 
   def check_game_over(state) do
     state
@@ -83,6 +93,23 @@ defmodule Sim.Game.State do
     state
     |> Map.put(:spending, Map.merge(old, spending))
     |> update_player_budget()
+  end
+
+  def next_event(
+        %__MODULE__{
+          remaining_events: remaining_events,
+          spending: spending,
+          metrics: metrics
+        } = state
+      ) do
+    new_metrics =
+      remaining_events
+      |> Enum.find(&Event.is_triggered(&1, spending), nil)
+      |> Messages.broadcast_event()
+      |> Event.apply_effects(metrics)
+
+    state
+    |> Map.update(:metrics, new_metrics)
   end
 
   defp game_over?(%__MODULE__{

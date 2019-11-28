@@ -8,6 +8,7 @@ defmodule SimWeb.GameChannel do
   end
 
   def handle_info(:after_join, socket) do
-    socket.player_name
+    broadcast!(socket, "joined", %{player_id: socket.assign.player_id})
+    {:noreply, socket}
   end
 end

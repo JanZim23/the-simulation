@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import axios from 'axios';
 import './App.css';
 import TreeMap from "react-d3-treemap";
@@ -22,7 +21,8 @@ class App extends React.Component {
       id: 0,
       intervalIsSet: false,
       loggedIn: false,
-      name: null
+      name: null,
+      game: null
     };
   }
 
@@ -48,10 +48,11 @@ class App extends React.Component {
   }
 
   // Handles a successful login
-  handleSuccess(newName) {
+  handleSuccess(newName, gameName) {
     this.setState({
       loggedIn: true,
-      name: newName 
+      name: newName,
+      game: gameName
     });
   }
 
@@ -64,7 +65,7 @@ class App extends React.Component {
 
   // Gets data from the server and sets the state to that.
   getData = () => {
-    fetch('http://localhost:3001/getData')
+    fetch(`http://localhost:3001/getData?game=${this.state.game}`)
       .then((res) => res.json())
       .then(res => this.setState({
         spending: res.spending,
@@ -74,7 +75,7 @@ class App extends React.Component {
   // Puts the user's updated policy to the server.
   putData = () => {
     var userInfo = {
-
+      game: this.state.game
     };
     var query = 'http://localhost:3001/putData';
     axios.post(query, userInfo);
@@ -91,8 +92,8 @@ class App extends React.Component {
         </div>
         <div className={this.state.loggedIn ? "game" : "pre-game"}>
           <TreeMap
-          height={500}
-          width={500}
+          height={300}
+          width={300}
           data={this.state.spending}
           valueUnit={"B $"}
         />

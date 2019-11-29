@@ -4,7 +4,8 @@ import Axios from 'axios';
 // Page shown when someone is signing in.
 class JoinGameMenu extends React.Component {
     state = {
-        id: null
+        name: null,
+        game: null
     };
 
     constructor(props) {
@@ -15,18 +16,27 @@ class JoinGameMenu extends React.Component {
     };
 
     // Posts a new player's name to the backend.
-    postPlayer = (name) => {
+    postPlayer = (name, game) => {
         Axios.post('http://localhost:3001/getData', {
-            name: this.state.name
-        });
-        this.props.success(name);
+            name: this.state.name,
+            game: this.state.game
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    this.props.success(name, game);
+                } else {
+                    this.props.failure();
+                }
+            });
     }
 
     render() {
         return (
             <div id='newPlayerForm'>
                 <input id='name' placeholder='Name' />
-                <button onClick={() => this.postPlayer(document.getElementById('name').value)}>
+                <input id='gameName' placeholder='Game to join' />
+                <button onClick={() => this.postPlayer(document.getElementById('name').value,
+                document.getElementById('gameName').value)}>
                     Join Game
                 </button>
             </div>

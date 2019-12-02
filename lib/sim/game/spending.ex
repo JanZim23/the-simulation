@@ -47,4 +47,12 @@ defmodule Sim.Game.Spending do
   def calc_change({key, t, c}, spending, current) do
     (t - Map.get(spending, key, 0)) * (c / 60) + current
   end
+
+  def adjust_spending(spending, priority_spending) do
+    priority_spending
+    |> Map.from_struct()
+    |> Enum.reduce(spending, fn {key, wish}, spnd ->
+      Map.update!(spnd, key, &Float.round((wish - &1) / 10 + &1, 3))
+    end)
+  end
 end

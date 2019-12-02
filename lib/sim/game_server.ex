@@ -11,6 +11,12 @@ defmodule Sim.GameServer do
     |> initial_state()
   end
 
+  defcast start_game(), state: state do
+    state
+    |> State.start_game()
+    |> new_state()
+  end
+
   defcall get_state(), state: state do
     reply(state)
   end
@@ -28,9 +34,21 @@ defmodule Sim.GameServer do
     |> new_state()
   end
 
+  defcall get_player(id), state: state do
+    state
+    |> State.get_player(id)
+    |> reply()
+  end
+
   defcast update_spending(spending), state: state do
     state
     |> State.update_spending(spending)
+    |> new_state()
+  end
+
+  defcast update_player_priorities(player_id, priorities), state: state do
+    state
+    |> State.update_player_priorities(player_id, priorities)
     |> new_state()
   end
 

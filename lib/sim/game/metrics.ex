@@ -1,6 +1,6 @@
 defmodule Sim.Game.Metrics do
   defstruct tax: 21,
-            global_temp: 24.0,
+            global_temp: 0.0,
             cost_of_living: 700,
             safety: 99,
             total_expenditures: 2740

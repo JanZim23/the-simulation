@@ -22,10 +22,11 @@ defmodule SimWeb.UserSocket do
     {:ok, socket}
   end
 
-  def attach_game(socket, game_id, player_id) do
+  def attach_game(socket, game_id \\ nil, player_id, name \\ nil) do
     socket
     |> assign(:game, {:via, Registry, {Sim.GameRegistry, game_id}})
     |> assign(:player_id, player_id)
+    |> assign(:player_name, name)
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

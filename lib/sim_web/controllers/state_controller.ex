@@ -8,4 +8,9 @@ defmodule SimWeb.StateController do
 
     render(conn, "state.json", state: state)
   end
+
+  def new(conn, %{"id" => id}) do
+    {:ok, _} = Sim.GameServer.start(id)
+    resp(conn, 201, "")
+  end
 end

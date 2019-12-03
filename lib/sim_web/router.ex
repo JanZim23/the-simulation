@@ -13,16 +13,18 @@ defmodule SimWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", SimWeb do
-    pipe_through :browser
+  scope "/sim" do
+    scope "/", SimWeb do
+      pipe_through :browser
 
-    get "/", PageController, :index
-  end
+      get "/", PageController, :index
+    end
 
-  scope "/api", SimWeb do
-    pipe_through :api
+    scope "/api", SimWeb do
+      pipe_through :api
 
-    get "/state/:id", StateController, :show
-    get "/game/new/:name", StateController, :new
+      get "/state/:id", StateController, :show
+      get "/game/new/:name", StateController, :new
+    end
   end
 end

@@ -9,7 +9,7 @@ use Mix.Config
 
 # Configures the endpoint
 config :sim, SimWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "localhost", path: "/sim"],
   secret_key_base: "XU24EDN+fewdaTBzuKwuuIM7IXQCoXof3uuF//1jwaW9gR3Aqw8HzX7QrIe6nJe6",
   render_errors: [view: SimWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Sim.PubSub, adapter: Phoenix.PubSub.PG2]

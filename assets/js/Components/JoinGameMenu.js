@@ -3,6 +3,17 @@ import Axios from "axios";
 
 import socket from "../socket";
 
+const makeid = length => {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
+
 // Page shown when someone is signing in.
 class JoinGameMenu extends React.Component {
   state = {
@@ -19,7 +30,7 @@ class JoinGameMenu extends React.Component {
 
   // Posts a new player's name to the backend.
   postPlayer = (player_name, game_id) => {
-    let player_id = random_string();
+    let player_id = makeid(10);
     // Now that you are connected, you can join channels with a topic:
     let channel = socket.channel(`game:${game_id}`, {
       player_id: player_id,

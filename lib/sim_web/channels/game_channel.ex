@@ -10,16 +10,16 @@ defmodule SimWeb.GameChannel do
 
   @spec handle_info(:after_join, Phoenix.Socket.t()) :: {:noreply, Phoenix.Socket.t()}
   def handle_info(:after_join, socket) do
-    GameServer.sign_up(socket.game, socket.assign.player_id, socket.assign.player_name)
-    broadcast!(socket, "joined", %{player_id: socket.assign.player_id})
+    GameServer.sign_up(socket.assigns.game, socket.assigns.player_id, socket.assigns.player_name)
+    broadcast!(socket, "joined", %{player_id: socket.assigns.player_id})
     {:noreply, socket}
   end
 
   def handle_in(:me, _, socket) do
-    {:reply, socket, GameServer.get_player(socket.assign.game, socket.assign.player_id)}
+    {:reply, socket, GameServer.get_player(socket.assigns.game, socket.assigns.player_id)}
   end
 
   def handle_in(:update_priorities, %{"priorities" => priorities}, socket) do
-    GameServer.update_player_priorities(socket.game, socket.player_id, priorities)
+    GameServer.update_player_priorities(socket.assigns.game, socket.assigns.player_id, priorities)
   end
 end

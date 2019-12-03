@@ -9,6 +9,19 @@ import JoinGameMenu from "./JoinGameMenu";
 
 import socket from "../socket";
 
+const map_spending_to_data = spending => {
+  console.log(spending);
+  let children = Object.keys(spending).map(key => {
+    return {
+      name: key,
+      value: spending[key]
+    };
+  });
+  return {
+    children
+  };
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -32,10 +45,6 @@ class App extends React.Component {
   componentDidMount() {
     this.getData();
 
-    if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getData, 1000);
-      this.setState({ intervalIsSet: interval });
-    }
     if (this.state.reqSignIn) {
     }
   }
@@ -51,6 +60,10 @@ class App extends React.Component {
 
   // Handles a successful login
   handleSuccess(channel, game_id, player_id, player_name) {
+    if (!this.state.intervalIsSet) {
+      let interval = setInterval(this.getData, 1000);
+      this.setState({ intervalIsSet: interval });
+    }
     this.setState({
       loggedIn: true,
       name: player_name,
@@ -69,14 +82,15 @@ class App extends React.Component {
 
   // Gets data from the server and sets the state to that.
   getData = () => {
-    fetch(`/api/state/${this.state.game}`)
+    fetch(`/sim/api/state/${this.state.game}`)
       .then(res => res.json())
-      .then(res =>
+      .then(res => {
+        console.log(map_spending_to_data(res.spending), res);
         this.setState({
-          spending: res.spending,
+          spending: map_spending_to_data(res.spending),
           metrics: res.metrics
-        })
-      );
+        });
+      });
   };
 
   // Puts the user's updated policy to the server.

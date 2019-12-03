@@ -13,6 +13,10 @@ defmodule SimWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/" do
+    pipe_through :browser
+  end
+
   scope "/sim" do
     scope "/", SimWeb do
       pipe_through :browser

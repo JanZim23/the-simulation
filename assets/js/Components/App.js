@@ -18,7 +18,8 @@ const map_spending_to_data = spending => {
     };
   });
   return {
-    children, name: 'Spending'
+    children,
+    name: "Spending"
   };
 };
 
@@ -93,54 +94,59 @@ class App extends React.Component {
         <header className="App-header">
           <h1>The Simulation</h1>
         </header>
-        <div className="login">
-          <JoinGameMenu
-            success={this.handleSuccess}
-            failure={this.handleFailure}
-          />
-        </div>
-        <div className={this.state.loggedIn ? "game" : "pre-game"}>
-          <TreeMap
-            height={300}
-            width={300}
-            data={this.state.spending}
-            valueUnit={"B $"}
-          />
-          <div style={{ padding: "10px" }}>
-            <h3>Budget</h3>
-            <input
-              type="text"
-              placeholder="Climate"
-              id="climate"
-              style={{ width: "200px" }}
+        {this.state.loggedIn ? (
+          <div className={this.state.loggedIn ? "game" : "pre-game"}>
+            <TreeMap
+              height={300}
+              width={300}
+              data={this.state.spending}
+              valueUnit={"B $"}
             />
-            <input
-              type="text"
-              placeholder="Welfare"
-              id="welfare"
-              style={{ width: "200px" }}
-            />
-            <input
-              type="text"
-              placeholder="Military"
-              id="military"
-              style={{ width: "200px" }}
-            />
-            <input
-              type="text"
-              placeholder="Health"
-              id="health"
-              style={{ width: "200px" }}
-            />
-            <input
-              type="text"
-              placeholder="Education"
-              id="education"
-              style={{ width: "200px" }}
-            />
-            <button onClick={() => this.postNewBudget()}>Propose Budget</button>
+            <div style={{ padding: "10px" }}>
+              <h3>Budget</h3>
+              <input
+                type="text"
+                placeholder="Climate"
+                id="climate"
+                style={{ width: "200px" }}
+              />
+              <input
+                type="text"
+                placeholder="Welfare"
+                id="welfare"
+                style={{ width: "200px" }}
+              />
+              <input
+                type="text"
+                placeholder="Military"
+                id="military"
+                style={{ width: "200px" }}
+              />
+              <input
+                type="text"
+                placeholder="Health"
+                id="health"
+                style={{ width: "200px" }}
+              />
+              <input
+                type="text"
+                placeholder="Education"
+                id="education"
+                style={{ width: "200px" }}
+              />
+              <button onClick={() => this.postNewBudget()}>
+                Propose Budget
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="login">
+            <JoinGameMenu
+              success={this.handleSuccess}
+              failure={this.handleFailure}
+            />
+          </div>
+        )}
       </div>
     );
   }

@@ -18,7 +18,7 @@ const map_spending_to_data = spending => {
     };
   });
   return {
-    children
+    children, name: 'Spending'
   };
 };
 

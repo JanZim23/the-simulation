@@ -6,7 +6,7 @@ import TreeMap from "react-d3-treemap";
 import "react-d3-treemap/dist/react.d3.treemap.css";
 // import LineGraph from "./Components/LineGraph";
 import JoinGameMenu from "./JoinGameMenu";
-
+import TemperatureGraph from "./TemperatureGraph";
 import socket from "../socket";
 
 const map_spending_to_data = spending => {
@@ -97,11 +97,12 @@ class App extends React.Component {
         {this.state.loggedIn ? (
           <div className={this.state.loggedIn ? "game" : "pre-game"}>
             <TreeMap
-              height={300}
-              width={300}
+              height={500}
+              width={500}
               data={this.state.spending}
               valueUnit={"B $"}
             />
+            {this.state.gameState == null || <TemperatureGraph data={this.state.gameState} />}
             <div style={{ padding: "10px" }}>
               <h3>Budget</h3>
               <input

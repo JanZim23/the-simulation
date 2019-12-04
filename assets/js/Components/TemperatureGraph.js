@@ -9,7 +9,7 @@ class TemperatureGraph extends Component {
         super(props);
         this.state = {
             fetchingData: true,
-            data: [],
+            data: [{x: 0, y: 0}],
             hoverLoc: null,
             activePoint: null
         }
@@ -21,24 +21,24 @@ class TemperatureGraph extends Component {
         })
     }
     componentDidMount() {
+        console.log(this.props);
+        var newData = this.state.data;
+        newData.push({
+            x: this.props.data.tick,
+            y: this.props.data.temp
+        });
         this.setState({
-            data: this.state.data.append({
-                x: this.props.gameState.tick,
-                y: this.props.gameState.temp
-            })
+            data: newData
         });
     }
     render() {
         return (
-
             <div className='temperature'>
                 <div className='row'>
                     <h1>Global Temperature</h1>
                 </div>
                 <div className='row'>
-                    {!this.state.fetchingData ?
-                        <InfoBox data={this.state.data} />
-                        : null}
+                    <InfoBox data={this.state.data} />
                 </div>
                 <div className='row'>
                     <div className='popup'>
@@ -53,7 +53,6 @@ class TemperatureGraph extends Component {
                     </div>
                 </div>
             </div>
-
         );
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.css';
 import LineChart from './LineChart';
 import ToolTip from './ToolTip';
 import InfoBox from './InfoBox';
@@ -21,32 +21,12 @@ class TemperatureGraph extends Component {
         })
     }
     componentDidMount() {
-        const getData = () => {
-            const url = 'https://api.coindesk.com/v1/bpi/historical/close.json';
-
-            fetch(url).then(r => r.json())
-                .then((bitcoinData) => {
-                    const sortedData = [];
-                    let count = 0;
-                    for (let date in bitcoinData.bpi) {
-                        sortedData.push({
-                            t: moment(date).format('MMM DD'),
-                            p: bitcoinData.bpi[date].toLocaleString('us-EN', { style: 'currency', currency: 'USD' }),
-                            x: count, //previous days
-                            y: bitcoinData.bpi[date] // numerical price
-                        });
-                        count++;
-                    }
-                    this.setState({
-                        data: sortedData,
-                        fetchingData: false
-                    })
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
-        }
-        getData();
+        this.setState({
+            data: this.state.data.append({
+                x: this.props.gameState.tick,
+                y: this.props.gameState.temp
+            })
+        });
     }
     render() {
         return (
@@ -78,4 +58,4 @@ class TemperatureGraph extends Component {
     }
 }
 
-export default App;
+export default TemperatureGraph;

@@ -47,9 +47,7 @@ class TemperatureGraph extends Component {
                 </div>
                 <div className='row'>
                     <div className='chart'>
-                        {!this.state.fetchingData ?
-                            <LineChart data={this.state.data} onChartHover={(a, b) => this.handleChartHover(a, b)} />
-                            : null}
+                        <LineChart data={this.state.data} onChartHover={(a, b) => this.handleChartHover(a, b)} />
                     </div>
                 </div>
             </div>

@@ -20,8 +20,8 @@ class LineChart extends Component {
   getY(){
     const {data} = this.props;
     return {
-      min: data.reduce((min, p) => p.y < min ? p.y : min, data[0].y),
-      max: data.reduce((max, p) => p.y > max ? p.y : max, data[0].y)
+      min: -1.5,
+      max: 1.5
     }
   }
   // GET SVG COORDINATES

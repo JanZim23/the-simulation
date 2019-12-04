@@ -14,4 +14,11 @@ defmodule SimWeb.StateController do
     {:ok, _} = Sim.GameServer.start(id)
     resp(conn, 201, "")
   end
+
+  def start(conn, %{"name" => id}) do
+    :ok = id |> get_game() |> Sim.GameServer.start_game()
+    resp(conn, 201, "")
+  end
+
+  defp get_game(id), do: {:via, Registry, {Sim.GameRegistry, id}}
 end

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import '../css/InfoBox.css';
 
 class InfoBox extends Component {
@@ -13,23 +12,17 @@ class InfoBox extends Component {
     }
   }
   componentDidMount(){
-    this.getData = () => {
-      const {data} = this.props;
-          const temp = data[data.length - 1];
-          const change = temp - data[0];
-          const changeP = (temp - data[0]) / data[0] * 100;
-
-          this.setState({
-            currentTemp: temp,
-            monthChangeD: change,
-            monthChangeP: changeP.toFixed(2) + '%'
-          })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-    this.getData();
-    this.refresh = setInterval(() => this.getData(), 90000);
+    var data = this.props.data;
+    console.log(data);
+    const temp = data[data.length - 1].y;
+    const change = temp - data[0].y;
+    const changeP = (temp - data[0].y) / 0.000001 * 100;  
+    this.setState({
+        currentTemp: temp,
+        monthChangeD: change.toString(),
+        monthChangeP: changeP.toFixed(2) + '%'
+      })
+    console.log(this.state.monthChangeP)
   }
   componentWillUnmount(){
     clearInterval(this.refresh);
@@ -37,17 +30,13 @@ class InfoBox extends Component {
   render(){
     return (
       <div id="data-container">
-        { this.state.currentTemp ?
           <div id="left" className='box'>
             <div className="heading">{this.state.currentTemp}</div>
           </div>
-        : null}
-        { this.state.currentTemp ?
           <div id="middle" className='box'>
             <div className="heading">{this.state.monthChangeD}</div>
             <div className="subtext">Total Change (C)</div>
           </div>
-        : null}
           <div id="right" className='box'>
             <div className="heading">{this.state.monthChangeP}</div>
             <div className="subtext">Total Change (%)</div>

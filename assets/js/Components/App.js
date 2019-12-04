@@ -6,7 +6,7 @@ import TreeMap from "react-d3-treemap";
 import "react-d3-treemap/dist/react.d3.treemap.css";
 // import LineGraph from "./Components/LineGraph";
 import JoinGameMenu from "./JoinGameMenu";
-
+import TemperatureGraph from "./TemperatureGraph";
 import socket from "../socket";
 
 const map_spending_to_data = spending => {
@@ -112,8 +112,8 @@ class App extends React.Component {
             The government is spending a total of{" "}
             {this.state.metrics.total_expenditures} B$
             <TreeMap
-              height={300}
-              width={300}
+              height={500}
+              width={500}
               data={this.state.spending}
               valueUnit={"B $"}
             />
@@ -151,6 +151,9 @@ class App extends React.Component {
                   </tbody>
                 </table>
               </div>
+            )}
+            {this.state.gameState == null || (
+              <TemperatureGraph data={this.state.gameState} />
             )}
             <div style={{ padding: "10px" }}>
               <h3>Budget</h3>

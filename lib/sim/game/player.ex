@@ -12,8 +12,6 @@ defmodule Sim.Game.Player do
   ]
 
   def scew_spending({_id, %__MODULE__{priorities: priorities} = player}, spending, player_count) do
-    IO.inspect(binding())
-
     all_pris =
       spending
       |> Map.from_struct()
@@ -34,8 +32,6 @@ defmodule Sim.Game.Player do
   end
 
   defp scew_spending_down(%__MODULE__{budget: budget}, priority, spending, player_count) do
-    IO.inspect(binding())
-
     spending
     |> Map.update!(priority, fn d -> d - calc_impact(budget, player_count) / 7 end)
   end

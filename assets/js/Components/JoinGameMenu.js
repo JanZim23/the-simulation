@@ -39,6 +39,8 @@ class JoinGameMenu extends React.Component {
     channel
       .join()
       .receive("ok", resp => {
+        channel.push("sign_up", {});
+
         this.props.success(channel, game_id, player_id, player_name);
       })
       .receive("error", resp => {

@@ -103,6 +103,7 @@ defmodule Sim.Game.State do
     # |> check_next_event()
     |> update_player_budget()
     |> check_game_over()
+    |> Messages.broadcast_tick()
   end
 
   def calc_deltas(%__MODULE__{spending: spending} = state) do
@@ -163,7 +164,6 @@ defmodule Sim.Game.State do
     |> Enum.find(&Event.is_triggered(&1, spending), nil)
     |> Messages.broadcast_event()
     |> Event.apply_effects(state)
-    |> broadcast()
   end
 
   defp game_over?(%__MODULE__{
@@ -193,8 +193,9 @@ defmodule Sim.Game.State do
     Enum.reduce(players, spending, &Player.scew_spending(&1, &2, map_size(players)))
   end
 
-  defp broadcast(%__MODULE__{} = state) do
-    Messages.broadcast_state(state)
+  def export(state) do
     state
+    |> Map.from_struct()
+    |> Map.drop([:deltas, :tick_timer])
   end
 end

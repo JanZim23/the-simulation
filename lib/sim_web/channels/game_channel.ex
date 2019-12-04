@@ -5,12 +5,15 @@ defmodule SimWeb.GameChannel do
 
   def join("game:" <> game_id, %{"player_id" => player_id, "name" => name}, socket) do
     send(self(), :after_join)
-    {:ok, UserSocket.attach_game(socket, game_id, player_id, name)}
+
+    if GameServer.exists?(game_id) do
+      {:ok, UserSocket.attach_game(socket, game_id, player_id, name)}
+    else
+      {:error, :game_does_not_exist}
+    end
   end
 
-  @spec handle_info(:after_join, Phoenix.Socket.t()) :: {:noreply, Phoenix.Socket.t()}
   def handle_info(:after_join, socket) do
-    GameServer.sign_up(socket.assigns.game, socket.assigns.player_id, socket.assigns.player_name)
     broadcast!(socket, "joined", %{player_id: socket.assigns.player_id})
     {:noreply, socket}
   end

@@ -7,8 +7,8 @@ defmodule Sim.Game.Messages do
     broadcast(id, channel, "event", event)
   end
 
-  def broadcast_tick(id, channel, state) do
-    # TODO
-    broadcast(id, channel, "tick", state |> Map.from_struct())
+  def broadcast_tick(%Sim.Game.State{id: id} = state) do
+    broadcast(id, "game", "tick", state |> Sim.Game.State.export())
+    state
   end
 end

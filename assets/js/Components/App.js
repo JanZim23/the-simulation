@@ -44,27 +44,15 @@ class App extends React.Component {
 
   // Sets an interval to retrieve data from the server every second.
   componentDidMount() {
-    this.getData();
-
     if (this.state.reqSignIn) {
-    }
-  }
-
-  // never let a process live forever
-  // always kill a process everytime we are done using it
-  componentWillUnmount() {
-    if (this.state.intervalIsSet) {
-      clearInterval(this.state.intervalIsSet);
-      this.setState({ intervalIsSet: null });
     }
   }
 
   // Handles a successful login
   handleSuccess(channel, game_id, player_id, player_name) {
-    if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getData, 1000);
-      this.setState({ intervalIsSet: interval });
-    }
+    channel.on("tick", resp => {
+      this.setGameState(this, resp);
+    });
     this.setState({
       loggedIn: true,
       name: player_name,
@@ -81,18 +69,14 @@ class App extends React.Component {
     });
   }
 
-  // Gets data from the server and sets the state to that.
-  getData = () => {
-    fetch(`/sim/api/state/${this.state.game}`)
-      .then(res => res.json())
-      .then(res => {
-        console.log(map_spending_to_data(res.spending), res);
-        this.setState({
-          spending: map_spending_to_data(res.spending),
-          metrics: res.metrics
-        });
-      });
-  };
+  setGameState(cmp, game_state) {
+    console.log("Tick:", game_state);
+    cmp.setState({
+      spending: map_spending_to_data(game_state.spending),
+      metrics: game_state.metrics,
+      gameState: game_state
+    });
+  }
 
   // Puts the user's updated policy to the server.
   putData = () => {

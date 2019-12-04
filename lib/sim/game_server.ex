@@ -60,4 +60,13 @@ defmodule Sim.GameServer do
   defcast vote(player_id, voted_for), state: state do
     state |> State.cast_vote(player_id, voted_for) |> new_state()
   end
+
+  def exists?(id) do
+    case Registry.lookup(Sim.GameRegistry, id) do
+      [_ | _] -> true
+      _ -> false
+    end
+  rescue
+    _ -> false
+  end
 end

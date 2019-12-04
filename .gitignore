@@ -40,7 +40,7 @@ npm-debug.log
 
 # dependencies
 /node_modules
-/assets/node_modules
+/assets/js/node_modules
 /.pnp
 .pnp.js
 

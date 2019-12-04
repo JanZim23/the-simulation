@@ -30,7 +30,6 @@ defmodule Sim.GameServer do
   defcast tick(), state: state do
     state
     |> State.tick()
-    |> IO.inspect()
     |> new_state()
   end
 

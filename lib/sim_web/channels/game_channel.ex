@@ -15,11 +15,16 @@ defmodule SimWeb.GameChannel do
     {:noreply, socket}
   end
 
-  def handle_in(:me, _, socket) do
+  def handle_in("me", _, socket) do
     {:reply, socket, GameServer.get_player(socket.assigns.game, socket.assigns.player_id)}
   end
 
-  def handle_in(:update_priorities, %{"priorities" => priorities}, socket) do
+  def handle_in("sign_up", _, socket) do
+    GameServer.sign_up(socket.assigns.game, socket.assigns.player_id, socket.assigns.player_name)
+    {:noreply, socket}
+  end
+
+  def handle_in("update_priorities", %{"priorities" => priorities}, socket) do
     GameServer.update_player_priorities(socket.assigns.game, socket.assigns.player_id, priorities)
   end
 end

@@ -37,7 +37,8 @@ class App extends React.Component {
       intervalIsSet: false,
       loggedIn: false,
       name: null,
-      game: null
+      game: null,
+      channel: null
     };
   }
 

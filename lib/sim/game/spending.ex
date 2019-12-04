@@ -18,6 +18,7 @@ defmodule Sim.Game.Spending do
   def get_delta_change(%{} = deltas) do
     deltas
     |> Enum.map(fn {key, f} -> {key, f.(0) |> Float.round(4)} end)
+    |> Enum.into(%{})
   end
 
   @spec get_deltas(Sim.Game.Spending.t()) :: map

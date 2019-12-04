@@ -28,7 +28,11 @@ defmodule SimWeb.Router do
       pipe_through :api
 
       get "/state/:id", StateController, :show
-      get "/game/new/:name", StateController, :new
+
+      scope "/game" do
+        get "/new/:name", StateController, :new
+        get "/start/:name", StateController, :start
+      end
     end
   end
 end

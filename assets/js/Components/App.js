@@ -39,7 +39,9 @@ class App extends React.Component {
       loggedIn: false,
       name: null,
       game: null,
-      channel: null
+      channel: null,
+      errorMsg: null,
+      gameState: null
     };
   }
 
@@ -66,7 +68,8 @@ class App extends React.Component {
   // Handles a failed or no login
   handleFailure() {
     this.setState({
-      loggedIn: false
+      loggedIn: false,
+      errorMsg: "Could Not Join Game!"
     });
   }
 
@@ -79,6 +82,14 @@ class App extends React.Component {
     });
   }
 
+  showMetricValue(state, metric) {
+    state.metrics[metric];
+  }
+
+  showMetricDelta(state, metric) {
+    state.delta_change[metric];
+  }
+
   // Puts the user's updated policy to the server.
   putData = () => {
     var userInfo = {
@@ -89,19 +100,58 @@ class App extends React.Component {
   };
 
   render() {
+    console.log("new render", this.state);
     return (
       <div className="App">
         <header className="App-header">
           <h1>The Simulation</h1>
         </header>
+
         {this.state.loggedIn ? (
           <div className={this.state.loggedIn ? "game" : "pre-game"}>
+            The government is spending a total of{" "}
+            {this.state.metrics.total_expenditures} B$
             <TreeMap
               height={300}
               width={300}
               data={this.state.spending}
               valueUnit={"B $"}
             />
+            {this.state.gameState == null || (
+              <div style={{ textAlign: "left", alignSelf: "center" }}>
+                <table width={500}>
+                  <tbody>
+                    <tr>
+                      <td>Metric</td>
+                      <td>Value</td>
+                      <td>Delta</td>
+                    </tr>
+                    <tr>
+                      <td>Global Temperature</td>
+                      <td>{this.state.gameState.metrics.global_temp}</td>
+                      <td>{this.state.gameState.delta_change.global_temp}</td>
+                    </tr>
+                    <tr>
+                      <td>Safety</td>
+                      <td>{this.state.gameState.metrics.safety}</td>
+                      <td>{this.state.gameState.delta_change.safety}</td>
+                    </tr>
+                    <tr>
+                      <td>Cost of Living</td>
+                      <td>{this.state.gameState.metrics.cost_of_living}</td>
+                      <td>
+                        {this.state.gameState.delta_change.cost_of_living}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Tax</td>
+                      <td>{this.state.gameState.metrics.tax}</td>
+                      <td>{this.state.gameState.delta_change.tax}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
             <div style={{ padding: "10px" }}>
               <h3>Budget</h3>
               <input
@@ -145,6 +195,7 @@ class App extends React.Component {
               success={this.handleSuccess}
               failure={this.handleFailure}
             />
+            <span style={{ color: "red" }}>{this.state.errorMsg}</span>
           </div>
         )}
       </div>

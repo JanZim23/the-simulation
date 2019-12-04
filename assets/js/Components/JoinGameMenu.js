@@ -51,18 +51,26 @@ class JoinGameMenu extends React.Component {
   render() {
     return (
       <div id="newPlayerForm">
-        <input id="name" placeholder="Name" />
-        <input id="gameName" placeholder="Game to join" />
-        <button
-          onClick={() =>
-            this.postPlayer(
-              document.getElementById("name").value,
-              document.getElementById("gameName").value
-            )
-          }
-        >
-          Join Game
-        </button>
+        Welcome! <br></br>
+        Please enter your name and a code to get started!
+        <br />
+        <br />
+        <div>
+          <input id="name" placeholder="Your Name..." />
+          <br />
+          <input id="gameName" placeholder="Game Code..." />
+          <br />
+          <button
+            onClick={() =>
+              this.postPlayer(
+                document.getElementById("name").value,
+                document.getElementById("gameName").value
+              )
+            }
+          >
+            Join Simulation
+          </button>
+        </div>
       </div>
     );
   }

@@ -10,7 +10,7 @@ import TemperatureGraph from "./TemperatureGraph";
 import socket from "../socket";
 
 const map_spending_to_data = spending => {
-  console.log(spending);
+  //console.log(spending);
   let children = Object.keys(spending).map(key => {
     return {
       name: key,
@@ -30,6 +30,7 @@ class App extends React.Component {
     // Bind the this context to the handler function
     this.handleSuccess = this.handleSuccess.bind(this);
     this.handleFailure = this.handleFailure.bind(this);
+    this.handleTreeData = this.handleTreeData.bind(this);
 
     this.state = {
       spending: [],
@@ -74,7 +75,7 @@ class App extends React.Component {
   }
 
   setGameState(cmp, game_state) {
-    console.log("Tick:", game_state);
+    //console.log("Tick:", game_state);
     cmp.setState({
       spending: map_spending_to_data(game_state.spending),
       metrics: game_state.metrics,
@@ -99,22 +100,41 @@ class App extends React.Component {
     axios.post(query, userInfo);
   };
 
+  // Listens and updates the data going to the tree data.
+  handleTreeData() {
+    var data = {
+      name: "Spending", children: [{ name: "climate", value: 0 },
+      { name: "education", value: 73 },
+      { name: "health", value: 1300 },
+      { name: "military", value: 500 },
+      { name: "welfare", value: 867 }]
+    };
+    this.state.channel.on("tick", resp => {
+      if (resp != null) {
+        console.log(resp.spending);
+        return (map_spending_to_data(resp.spending));
+      }
+    });
+    console.log(data)
+    return data;
+  }
+
   render() {
-    console.log("new render", this.state);
+    //console.log("new render", this.state);
     return (
       <div className="App">
         <header className="App-header">
           <h1>The Simulation</h1>
         </header>
 
-        {this.state.loggedIn ? (
+        {this.state.gameState != null ? (
           <div className={this.state.loggedIn ? "game" : "pre-game"}>
             The government is spending a total of{" "}
             {this.state.metrics.total_expenditures} B$
             <TreeMap
               height={500}
               width={500}
-              data={this.state.spending}
+              data={this.handleTreeData()}
               valueUnit={"B $"}
             />
             {this.state.gameState == null || (

@@ -89,10 +89,10 @@ class LineChart extends Component {
       <g className="linechart_label">
         {/* Y AXIS LABELS */}
         <text transform={`translate(${yLabelSize/2}, 20)`} textAnchor="middle">
-          {this.getY().max.toLocaleString('us-EN',{ style: 'currency', currency: 'USD' })}
+          {this.getY().max}
         </text>
         <text transform={`translate(${yLabelSize/2}, ${svgHeight - xLabelSize - padding})`} textAnchor="middle">
-          {this.getY().min.toLocaleString('us-EN',{ style: 'currency', currency: 'USD' })}
+          {this.getY().min}
         </text>
         {/* X AXIS LABELS */}
         <text transform={`translate(${yLabelSize}, ${svgHeight})`} textAnchor="start">

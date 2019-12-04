@@ -22,7 +22,6 @@ class InfoBox extends Component {
         monthChangeD: change.toString(),
         monthChangeP: changeP.toFixed(2) + '%'
       })
-    console.log(this.state.monthChangeP)
   }
   componentWillUnmount(){
     clearInterval(this.refresh);

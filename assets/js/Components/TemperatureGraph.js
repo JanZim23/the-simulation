@@ -25,11 +25,12 @@ class TemperatureGraph extends Component {
         var newData = this.state.data;
         newData.push({
             x: this.props.data.tick,
-            y: this.props.data.temp
+            y: this.props.data.global_temp
         });
         this.setState({
             data: newData
         });
+        console.log(this.data);
     }
     render() {
         return (

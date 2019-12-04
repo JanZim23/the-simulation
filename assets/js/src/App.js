@@ -7,6 +7,7 @@ import "react-d3-treemap/dist/react.d3.treemap.css";
 // import LineGraph from "./Components/LineGraph";
 import JoinGameMenu from './Components/JoinGameMenu';
 import EventPopUp from './Components/EventPopUp';
+import LineChart from './Components/LineChart';
 
 class App extends React.Component {
   constructor(props) {
@@ -130,6 +131,7 @@ class App extends React.Component {
             }}
             valueUnit={"B$"}
           />
+          <LineChart/>
           <div style={{ padding: '10px' }}>
             <h3>Budget</h3>
             <input

@@ -28,3 +28,7 @@
 .game {
   pointer-events: auto;
 }
+
+rect#rect-0 {
+  fill: green;
+}

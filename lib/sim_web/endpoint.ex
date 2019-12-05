@@ -1,7 +1,7 @@
 defmodule SimWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :sim
 
-  socket "/socket", SimWeb.UserSocket,
+  socket "/sim/socket", SimWeb.UserSocket,
     websocket: true,
     longpoll: false
 

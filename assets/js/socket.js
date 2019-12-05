@@ -8,7 +8,7 @@
 // from the params if you are not using authentication.
 import { Socket } from "phoenix";
 
-let socket = new Socket("/socket", { params: {} });
+let socket = new Socket("/sim/socket", { params: {} });
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,

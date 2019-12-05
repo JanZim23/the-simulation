@@ -8,6 +8,7 @@ import "react-d3-treemap/dist/react.d3.treemap.css";
 import JoinGameMenu from "./JoinGameMenu";
 import TemperatureGraph from "./TemperatureGraph";
 import socket from "../socket";
+import Priorities from "./Priorities";
 
 const map_spending_to_data = spending => {
   //console.log(spending);
@@ -31,6 +32,8 @@ class App extends React.Component {
     this.handleSuccess = this.handleSuccess.bind(this);
     this.handleFailure = this.handleFailure.bind(this);
     this.handleTreeData = this.handleTreeData.bind(this);
+
+    this.setPriorities = this.setPriorities.bind(this);
 
     this.state = {
       spending: [],
@@ -103,20 +106,27 @@ class App extends React.Component {
   // Listens and updates the data going to the tree data.
   handleTreeData() {
     var data = {
-      name: "Spending", children: [{ name: "climate", value: 0 },
-      { name: "education", value: 73 },
-      { name: "health", value: 1300 },
-      { name: "military", value: 500 },
-      { name: "welfare", value: 867 }]
+      name: "Spending",
+      children: [
+        { name: "climate", value: 0 },
+        { name: "education", value: 73 },
+        { name: "health", value: 1300 },
+        { name: "military", value: 500 },
+        { name: "welfare", value: 867 }
+      ]
     };
     this.state.channel.on("tick", resp => {
       if (resp != null) {
         console.log(resp.spending);
-        return (map_spending_to_data(resp.spending));
+        return map_spending_to_data(resp.spending);
       }
     });
-    console.log(data)
+    console.log(data);
     return data;
+  }
+
+  setPriorities(priorities) {
+    this.state.channel.push("update_priorities", { priorities });
   }
 
   render() {
@@ -137,6 +147,7 @@ class App extends React.Component {
               data={this.handleTreeData()}
               valueUnit={"B $"}
             />
+            <Priorities setPriorities={this.setPriorities}></Priorities>
             {this.state.gameState == null || (
               <div style={{ textAlign: "left", alignSelf: "center" }}>
                 <table width={500}>
@@ -173,7 +184,7 @@ class App extends React.Component {
               </div>
             )}
             {this.state.gameState == null || (
-              <TemperatureGraph data={this.state.gameState} />
+              <TemperatureGraph channel={this.state.channel} />
             )}
             <div style={{ padding: "10px" }}>
               <h3>Budget</h3>

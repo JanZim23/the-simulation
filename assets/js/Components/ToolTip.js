@@ -14,8 +14,8 @@ class ToolTip extends Component {
 
     return (
       <div className='hover' style={ placementStyles }>
-        <div className='date'>{ activePoint.d }</div>
-        <div className='price'>{activePoint.p }</div>
+        <div className='date'>{ activePoint.x }</div>
+        <div className='price'>{activePoint.y }</div>
       </div>
     )
   }

@@ -9,7 +9,7 @@ class TemperatureGraph extends Component {
         super(props);
         this.state = {
             fetchingData: true,
-            data: [{x: 0, y: 0}],
+            data: [],
             hoverLoc: null,
             activePoint: null
         }
@@ -21,16 +21,18 @@ class TemperatureGraph extends Component {
         })
     }
     componentDidMount() {
-        console.log(this.props);
         var newData = this.state.data;
         newData.push({
             x: this.props.data.tick,
             y: this.props.data.global_temp
         });
+        if (this.state.data.length = 0) {
+            this.setState({ data: [{ x: 0, y: 0 }] });
+        }
+        console.log(newData);
         this.setState({
             data: newData
         });
-        console.log(this.data);
     }
     render() {
         return (

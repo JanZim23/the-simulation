@@ -6,8 +6,7 @@ import TreeMap from "react-d3-treemap";
 import "react-d3-treemap/dist/react.d3.treemap.css";
 // import LineGraph from "./Components/LineGraph";
 import JoinGameMenu from "./JoinGameMenu";
-import TemperatureGraph from "./TemperatureGraph";
-import socket from "../socket";
+import TemperatureBar from "./TemperatureBar"
 
 const map_spending_to_data = spending => {
   //console.log(spending);
@@ -100,7 +99,7 @@ class App extends React.Component {
     axios.post(query, userInfo);
   };
 
-  // Listens and updates the data going to the tree data.
+  // Listens and updates the data going to the TreeMap.
   handleTreeData() {
     var data = {
       name: "Spending", children: [{ name: "climate", value: 0 },
@@ -111,12 +110,20 @@ class App extends React.Component {
     };
     this.state.channel.on("tick", resp => {
       if (resp != null) {
-        console.log(resp.spending);
         return (map_spending_to_data(resp.spending));
       }
     });
-    console.log(data)
     return data;
+  }
+
+  // Listens and updates the data going to the chart.
+  handleChartData() {
+    this.state.channel.on("tick", resp => {
+      if (resp != null) {
+        return (resp);
+      }
+    });
+    return { metrics: { global_temp: 0 } };
   }
 
   render() {
@@ -173,7 +180,7 @@ class App extends React.Component {
               </div>
             )}
             {this.state.gameState == null || (
-              <TemperatureGraph data={this.state.gameState} />
+              <TemperatureBar key={this.state.gameState.tick} height={500} width={500} data={this.handleChartData()} />
             )}
             <div style={{ padding: "10px" }}>
               <h3>Budget</h3>

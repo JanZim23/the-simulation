@@ -137,9 +137,12 @@ defmodule Sim.Game.State do
 
   def check_next_event(state), do: state
 
-  def check_game_over(state) do
+  def check_game_over(%__MODULE__{started?: st?} = state) do
+    go? = game_over?(state)
+
     state
-    |> Map.put(:game_over, game_over?(state))
+    |> Map.put(:game_over, go?)
+    |> Map.put(:started, st? and not go?)
   end
 
   def cast_vote(%__MODULE__{} = state, player_id, voted_for) do

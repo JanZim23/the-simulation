@@ -29,5 +29,6 @@ defmodule SimWeb.GameChannel do
 
   def handle_in("update_priorities", %{"priorities" => priorities}, socket) do
     GameServer.update_player_priorities(socket.assigns.game, socket.assigns.player_id, priorities)
+    {:noreply, socket}
   end
 end

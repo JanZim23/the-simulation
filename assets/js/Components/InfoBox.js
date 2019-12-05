@@ -1,46 +1,30 @@
-import React, { Component } from 'react';
-import '../css/InfoBox.css';
+import React, { Component } from "react";
+import "../css/InfoBox.css";
 
 class InfoBox extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentTemp: null,
-      monthChangeD: null,
-      monthChangeP: null,
-      updatedAt: null
-    }
   }
-  componentDidMount(){
+  render() {
     var data = this.props.data;
-    console.log(data);
     const temp = data[data.length - 1].y;
+    const ptemp = data.length == 1 ? data[0].y : data[data.length - 2].y;
     const change = temp - data[0].y;
-    const changeP = (temp - data[0].y) / 0.000001 * 100;  
-    this.setState({
-        currentTemp: temp,
-        monthChangeD: change.toString(),
-        monthChangeP: changeP.toFixed(2) + '%'
-      })
-  }
-  componentWillUnmount(){
-    clearInterval(this.refresh);
-  }
-  render(){
+    const changeP = ((temp - ptemp) / temp) * 100;
     return (
       <div id="data-container">
-          <div id="left" className='box'>
-            <div className="heading">{this.state.currentTemp}</div>
-          </div>
-          <div id="middle" className='box'>
-            <div className="heading">{this.state.monthChangeD}</div>
-            <div className="subtext">Total Change (C)</div>
-          </div>
-          <div id="right" className='box'>
-            <div className="heading">{this.state.monthChangeP}</div>
-            <div className="subtext">Total Change (%)</div>
-          </div>
-
+        <div id="left" className="box">
+          <div className="heading">{(14 + temp + "").substring(0, 5)}</div>
+          <div className="subtext">Glob. Avg. Temp. (C)</div>
+        </div>
+        <div id="middle" className="box">
+          <div className="heading">{change.toString()}</div>
+          <div className="subtext">Total Change (C)</div>
+        </div>
+        <div id="right" className="box">
+          <div className="heading">{changeP.toFixed(2) + "%"}</div>
+          <div className="subtext">Change (%)</div>
+        </div>
       </div>
     );
   }

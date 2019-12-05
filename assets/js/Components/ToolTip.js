@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
-import '../css/ToolTip.css';
+import React, { Component } from "react";
+import "../css/ToolTip.css";
 
 class ToolTip extends Component {
-
   render() {
-    const {hoverLoc, activePoint} = this.props;
-    const svgLocation = document.getElementsByClassName("linechart")[0].getBoundingClientRect();
+    const { hoverLoc, activePoint } = this.props;
+    const svgLocation = document
+      .getElementsByClassName("linechart")[0]
+      .getBoundingClientRect();
 
     let placementStyles = {};
     let width = 100;
-    placementStyles.width = width + 'px';
-    placementStyles.left = hoverLoc + svgLocation.left - (width/2);
+    placementStyles.width = width + "px";
+    placementStyles.left = hoverLoc + svgLocation.left - width / 2;
 
     return (
-      <div className='hover' style={ placementStyles }>
-        <div className='date'>{ activePoint.d }</div>
-        <div className='price'>{activePoint.p }</div>
+      <div className="hover" style={placementStyles}>
+        <div className="date">{activePoint.x}</div>
+        <div className="price">{activePoint.y}</div>
       </div>
-    )
+    );
   }
 }
 

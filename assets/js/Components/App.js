@@ -13,8 +13,21 @@ import Priorities from "./Priorities";
 const map_spending_to_data = spending => {
   //console.log(spending);
   let children = Object.keys(spending).map(key => {
+    var spending_name =
+      key === "climate"
+        ? "Climate Control"
+        : key === "military"
+        ? "Military Budget"
+        : key === "welfare"
+        ? "Social Security & Welfare"
+        : key === "health"
+        ? "Medicare & Medicade & Health"
+        : key === "education"
+        ? "Education"
+        : "Misc.";
+
     return {
-      name: key,
+      name: spending_name,
       value: spending[key]
     };
   });
@@ -31,7 +44,6 @@ class App extends React.Component {
     // Bind the this context to the handler function
     this.handleSuccess = this.handleSuccess.bind(this);
     this.handleFailure = this.handleFailure.bind(this);
-    this.handleTreeData = this.handleTreeData.bind(this);
 
     this.setPriorities = this.setPriorities.bind(this);
 
@@ -103,28 +115,6 @@ class App extends React.Component {
     axios.post(query, userInfo);
   };
 
-  // Listens and updates the data going to the tree data.
-  handleTreeData() {
-    var data = {
-      name: "Spending",
-      children: [
-        { name: "climate", value: 0 },
-        { name: "education", value: 73 },
-        { name: "health", value: 1300 },
-        { name: "military", value: 500 },
-        { name: "welfare", value: 867 }
-      ]
-    };
-    this.state.channel.on("tick", resp => {
-      if (resp != null) {
-        console.log(resp.spending);
-        return map_spending_to_data(resp.spending);
-      }
-    });
-    console.log(data);
-    return data;
-  }
-
   setPriorities(priorities) {
     this.state.channel.push("update_priorities", { priorities });
   }
@@ -144,7 +134,7 @@ class App extends React.Component {
             <TreeMap
               height={500}
               width={500}
-              data={this.handleTreeData()}
+              data={this.state.spending}
               valueUnit={"B $"}
             />
             <Priorities setPriorities={this.setPriorities}></Priorities>
@@ -183,6 +173,9 @@ class App extends React.Component {
                 </table>
               </div>
             )}
+            {this.state.gameState && this.state.gameState.game_over ? (
+              <div style={{ fontSize: "100pt" }}>Simulation Ended!</div>
+            ) : null}
             {this.state.gameState == null || (
               <TemperatureGraph channel={this.state.channel} />
             )}

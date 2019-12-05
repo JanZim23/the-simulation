@@ -10,9 +10,9 @@ defmodule Sim.Game.Spending do
   @d %{
     tax: {2740, 0.1, 21},
     total_expenditures: {0.0, 1.0, 0},
-    global_temp: [{:climate, 500, 0.0005}, {:education, 150, 0.0001}],
-    safety: [{:military, 500, -0.07}, {:education, 70, -0.001}, {:welfare, 900, -0.003}],
-    cost_of_living: [{:health, 1500, 0.10}, {:welfare, 700, 0.09}, {:education, 150, 0.08}]
+    global_temp: [{:climate, 500, 0.002}, {:education, 80, 0.001}],
+    safety: [{:military, 500, -0.13}, {:education, 70, -0.01}, {:welfare, 900, -0.003}],
+    cost_of_living: [{:health, 1500, 0.10}, {:welfare, 750, 0.09}, {:education, 150, 0.08}]
   }
 
   def get_delta_change(%{} = deltas) do
@@ -53,7 +53,7 @@ defmodule Sim.Game.Spending do
     priority_spending
     |> Map.from_struct()
     |> Enum.reduce(spending, fn {key, wish}, spnd ->
-      Map.update!(spnd, key, &Float.round((wish - &1) / 10 + &1, 3))
+      Map.update!(spnd, key, &Float.round((wish - &1) / 7 + &1, 3))
     end)
   end
 end

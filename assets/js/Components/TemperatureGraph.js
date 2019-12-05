@@ -23,7 +23,6 @@ class TemperatureGraph extends Component {
     });
   }
   componentDidMount() {
-    console.log(this.props);
     this.state.channel.on("tick", this.onTick);
   }
 
@@ -31,11 +30,12 @@ class TemperatureGraph extends Component {
     var newData = this.state.data;
 
     newData.push({
-      x: game_state.tick,
+      x: newData.length,
       y: game_state.metrics.global_temp
     });
     this.setState({
-      data: newData
+      data: newData,
+      current_temp: game_state.metrics.global_temp
     });
     console.log("New Temp", this.data);
   }

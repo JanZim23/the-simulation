@@ -108,7 +108,7 @@ defmodule Sim.Game.State do
     |> Messages.broadcast_tick()
   end
 
-  def update_time_tick(%__MODULE__{started?: true} = state) do
+  def update_time_tick(%__MODULE__{started?: true, game_over: false} = state) do
     Map.update!(state, :time_tick, &(&1 + 1))
   end
 
@@ -197,7 +197,7 @@ defmodule Sim.Game.State do
 
   def random_income() do
     x = Enum.random(1..200)
-    1200 + Float.floor(:math.pow(x / 20 + 1, 4))
+    1900 + Float.floor(:math.pow(x / 20 + 1, 4))
   end
 
   defp determine_spending(%__MODULE__{players: players, spending: spending}) do

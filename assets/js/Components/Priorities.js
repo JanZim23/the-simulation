@@ -5,17 +5,17 @@ import { spendingNameOf } from "./App";
 export const pColor = p => {
   switch (p) {
     case "climate":
-      return "rgba(97, 250, 92, 0.92)";
+      return "rgba(97, 250, 92, 1)";
     case "military":
-      return "rgba(250, 97, 92, 0.92)";
+      return "rgba(250, 97, 92, 1)";
     case "welfare":
-      return "rgba(92, 247, 250, 0.92)";
+      return "rgba(92, 247, 250, 1)";
     case "education":
-      return "rgba(250, 166, 92, 0.92)";
+      return "rgba(250, 166, 92, 1)";
     case "health":
-      return "rgba(234, 92, 250, 0.92)";
+      return "rgba(234, 92, 250, 1)";
     default:
-      return "rgba(171, 171, 171, 0.92)";
+      return "rgba(171, 171, 171, 1)";
   }
 };
 

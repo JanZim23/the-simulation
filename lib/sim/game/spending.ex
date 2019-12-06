@@ -10,9 +10,9 @@ defmodule Sim.Game.Spending do
   @tick_comp 10
 
   @d %{
-    tax: {2770, 0.1, 21},
+    tax: {2770, 0.07, 21},
     total_expenditures: {0.0, 1.0, 0},
-    global_temp: [{:climate, 700, 0.0005}, {:education, 100, 0.0004}],
+    global_temp: [{:climate, 700, 0.00045}, {:education, 100, 0.00035}],
     safety: [{:military, 500, -0.053}, {:education, 90, -0.01}, {:welfare, 1200, -0.003}],
     cost_of_living: [{:health, 1500, 0.10}, {:welfare, 950, 0.09}, {:education, 150, 0.09}]
   }

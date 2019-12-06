@@ -9,6 +9,10 @@ const map_income = (key, players) => {
   incomes.sort(function(a, b) {
     return a - b;
   });
+
+  if (incomes.length === 0) {
+    return [{ x: 0, y: 0 }];
+  }
   return incomes.map((income, inx) => ({ x: inx, y: income }));
 };
 

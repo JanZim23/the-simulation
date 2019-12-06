@@ -21,8 +21,11 @@ class Player extends React.Component {
     return (
       <div>
         <div style={{ fontSize: "16pt" }}>{player.name || "Anonymous"}</div>
-        <div className={"player-table"}>
-          <table rules={"all"}>
+        <div
+          style={{ width: 500, margin: "0 auto" }}
+          className={"player-table"}
+        >
+          <table width={"100%"} rules={"all"}>
             <tbody>
               <tr>
                 <td colSpan={2}>Income/Month</td>

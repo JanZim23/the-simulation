@@ -48,19 +48,35 @@ class JoinGameMenu extends React.Component {
       });
   };
 
+  createSimulation = (player_name, game_id) => {
+    var query = "/sim/api/game/new/" + game_id;
+    Axios.get(query);
+    this.postPlayer(player_name, game_id);
+  };
+
   render() {
     return (
-      <div id="newPlayerForm">
+      <div id="newPlayerForm" style={{ fontSize: "16pt" }}>
         Welcome! <br></br>
         Please enter your name and a code to get started!
         <br />
         <br />
         <div>
-          <input id="name" placeholder="Your Name..." />
+          <input
+            style={{ fontSize: "16pt", padding: "5px" }}
+            id="name"
+            placeholder="Your Name..."
+          />
           <br />
-          <input id="gameName" placeholder="Game Code..." />
+          <input
+            style={{ fontSize: "16pt", padding: "5px" }}
+            id="gameName"
+            placeholder="Game Code..."
+          />
+          <br />
           <br />
           <button
+            style={{ fontSize: "16pt", padding: "5px" }}
             onClick={() =>
               this.postPlayer(
                 document.getElementById("name").value,
@@ -70,6 +86,30 @@ class JoinGameMenu extends React.Component {
           >
             Join Simulation
           </button>
+          <br />
+          <br />
+          or
+          <br />
+          <br />
+          <button
+            style={{
+              fontSize: "16pt",
+              backgroundColor: "rgba(200,120,80,0.8)",
+              padding: "5px"
+            }}
+            onClick={() =>
+              this.createSimulation(
+                document.getElementById("name").value,
+                document.getElementById("gameName").value
+              )
+            }
+          >
+            Create New Simulation
+          </button>
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     );

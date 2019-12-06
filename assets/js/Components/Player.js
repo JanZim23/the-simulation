@@ -40,7 +40,10 @@ class Player extends React.Component {
                 return (
                   <tr>
                     <td>{exp}</td>
-                    <td className={"num"}> - {player.expenses[exp]} $</td>
+                    <td className={"num"}>
+                      {" "}
+                      - {(player.expenses[exp] + "").substr(0, 6)} $
+                    </td>
                   </tr>
                 );
               })}
@@ -51,7 +54,9 @@ class Player extends React.Component {
             </tbody>
           </table>
         </div>
-        <div>{player["bankrupt?"] ? "Bankrupt!" : null}</div>
+        <div style={{ fontSize: "40pt", fontWeight: "800" }}>
+          {player["bankrupt?"] ? "Bankrupt!" : null}
+        </div>
       </div>
     );
   }

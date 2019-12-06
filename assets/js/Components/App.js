@@ -119,7 +119,7 @@ class App extends React.Component {
     this.handleFailure = this.handleFailure.bind(this);
 
     this.setPriorities = this.setPriorities.bind(this);
-
+    this.startSim = this.startSim.bind(this);
     this.state = {
       spending: [],
       metrics: [],
@@ -181,13 +181,9 @@ class App extends React.Component {
   }
 
   // Puts the user's updated policy to the server.
-  putData = () => {
-    var userInfo = {
-      game: this.state.game
-    };
-    var query = "http://localhost:3001/putData";
-    axios.post(query, userInfo);
-  };
+  startSim() {
+    axios.get("/sim/api/game/start/" + this.state.game);
+  }
 
   setPriorities(priorities) {
     this.state.channel.push("update_priorities", { priorities });
@@ -200,7 +196,15 @@ class App extends React.Component {
   render() {
     //console.log("new render", this.state);
     return (
-      <div className="App">
+      <div
+        className="App"
+        style={{
+          backgroundColor:
+            this.state.gameState && this.state.gameState.game_over
+              ? "rgba(250,100,100,0.2)"
+              : "white"
+        }}
+      >
         <header className="App-header">
           <h1>The Simulation</h1>
         </header>
@@ -211,22 +215,27 @@ class App extends React.Component {
               By Aleksander Piekarski, Davin Jimeno, Alexander Klementovich and
               Jan Zimmermann
             </span>{" "}
-            <br /> <br /> <br />
+            <br />
+            <br />
+            <br />
+            <span style={{ fontSize: 24 }}>Simulation: {this.state.game}</span>
+            <br /> <br />
+            <br />
             {this.state.gameState && this.state.gameState.game_over ? (
               <div style={{ fontSize: "100pt" }}>Simulation Ended!</div>
             ) : null}
             <div style={textStyle}>
-              It is the date of{" "}
+              It is the{" "}
               <span style={{ fontWeight: "600" }}>
                 {this.getCurrentDate(
                   this.state.gameState ? this.state.gameState.time_tick : 0
                 )}
               </span>{" "}
-              and the government's discretionary spending totals{" "}
+              and the government's discretionary spending totals BN $
               <span style={{ fontWeight: "600" }}>
-                {(this.state.metrics.total_expenditures + "").substr(0, 6)} B$.
+                {(this.state.metrics.total_expenditures + "").substr(0, 6)}
               </span>
-              This simulation aims to demonstrate how complex the economy is
+              .This simulation aims to demonstrate how complex the economy is
               while also displaying how important it is to increase spending on
               the environment. Though it is obviously simplified for the sake of
               the simulation, the five spending categories in consideration are
@@ -240,7 +249,7 @@ class App extends React.Component {
               rate at which the global temperature increases or decreases will
               change depending on how much of the budget is spent on climate.
               However, if the global temperature increases by 1.5°C, then the
-              simulation will end. <br /> <br /> <br />
+              simulation will end. <br />
             </div>
             <TreeMap
               height={500}
@@ -254,8 +263,8 @@ class App extends React.Component {
               participants. As you chose priorities, other areas of spending
               will automatically decrease. You can only have a maximum of 7
               priorities.
-              <br />
-              <span style={{ fontWeight: "400" }}> Note that if:</span>
+              <br /> <br />
+              <span style={{ fontWeight: "700" }}> Note that if:</span>
               <br />- You have more that 5 priorities, the total government
               budget will increase.
               <br />- You have no priorities, the government will start spending
@@ -264,7 +273,14 @@ class App extends React.Component {
               <br />
               You can always remove priorities by clicking on them.
             </div>
-            <Priorities setPriorities={this.setPriorities}></Priorities>
+            <Priorities
+              enabled={
+                this.state.gameState &&
+                this.state.gameState.players[this.state.player_id] &&
+                !this.state.gameState.players[this.state.player_id]["bankrupt?"]
+              }
+              setPriorities={this.setPriorities}
+            ></Priorities>
             <div style={textStyle}>
               Though the environmental impacts of the global temperature rise
               should not be overlooked, one way to avoid the monetary losses is
@@ -291,22 +307,35 @@ class App extends React.Component {
               become. The more you invest in Welfare, Education and Health,
               everyones cost of living will decrease.
             </div>
+            <br />
+            <br />
+            <br />
             {this.state.gameState &&
               this.state.gameState.players[this.state.player_id] && (
                 <Player
                   player={this.state.gameState.players[this.state.player_id]}
                 ></Player>
               )}
+            <br />
+            <br />
+            <br />
             <div style={textStyle}>
               Once your imaginary house hold can no longer sustain itself the
               priorities you set no longer impact the government spending. Once
               more than half the participants can no longer contribute, the
-              simulation ends.
+              simulation ends. <br />
+              <br />
+              <br />
+              This becomes more difficult as the total government spending
+              increases because taxes will rise accordingly.
             </div>
             {this.state.gameState == null || (
               <div>
                 <span style={{ fontSize: 32 }}>
-                  Tax: {(this.state.gameState.metrics.tax + "").substr(0, 4)} %
+                  <pre>
+                    Tax: {(this.state.gameState.metrics.tax + "").substr(0, 4)}{" "}
+                    %
+                  </pre>
                 </span>
                 <div style={textStyle}>
                   For many people, the impact of a 1.5°C change in global
@@ -480,6 +509,16 @@ class App extends React.Component {
               <p class="c2">
                 <span class="c0"></span>
               </p>
+            </div>
+            <div style={textStyle}>
+              Once you are ready, you can start the simulation by clicking{" "}
+              <a
+                onClick={this.startSim}
+                style={{ cursor: "pointer", color: "blue" }}
+              >
+                here
+              </a>
+              .
             </div>
           </div>
         ) : (

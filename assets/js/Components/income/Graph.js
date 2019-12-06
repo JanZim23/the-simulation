@@ -38,7 +38,7 @@ class Graph extends Component {
     return (
       <div className="temperature">
         <div className="row">
-          <h1>Average {this.props.okey}</h1>
+          <h1>{this.props.okey} distribution</h1>
         </div>
         <div className="row">
           <InfoBox data={this.state.data} />

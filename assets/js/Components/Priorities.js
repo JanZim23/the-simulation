@@ -81,7 +81,7 @@ class Priorities extends React.Component {
         <div>
           <button
             style={{
-              backgroundColor: pColor("climate"),
+              backgroundColor: this.props.enabled && pColor("climate"),
               padding: "4px",
               margin: "4px",
               fontSize: "16pt"
@@ -92,7 +92,7 @@ class Priorities extends React.Component {
           </button>
           <button
             style={{
-              backgroundColor: pColor("education"),
+              backgroundColor: this.props.enabled && pColor("education"),
               padding: "4px",
               margin: "4px",
               fontSize: "16pt"
@@ -103,7 +103,7 @@ class Priorities extends React.Component {
           </button>
           <button
             style={{
-              backgroundColor: pColor("military"),
+              backgroundColor: this.props.enabled && pColor("military"),
               padding: "4px",
               margin: "4px",
               fontSize: "16pt"
@@ -114,7 +114,7 @@ class Priorities extends React.Component {
           </button>
           <button
             style={{
-              backgroundColor: pColor("welfare"),
+              backgroundColor: this.props.enabled && pColor("welfare"),
               padding: "4px",
               margin: "4px",
               fontSize: "16pt"
@@ -125,7 +125,7 @@ class Priorities extends React.Component {
           </button>
           <button
             style={{
-              backgroundColor: pColor("health"),
+              backgroundColor: this.props.enabled && pColor("health"),
               padding: "4px",
               margin: "4px",
               fontSize: "16pt"

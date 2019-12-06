@@ -9,14 +9,12 @@ const shuffle = array => {
 
 const playerMatrix = players => {
   var length = players.length;
-  var width = Math.floor(Math.sqrt(length));
-  console.log("width", width);
+  var width = Math.ceil(Math.sqrt(length));
   var matrix = [];
   for (var i = 0; i < length; i = i + width) {
     var row = players.splice(0, width);
-    matrix = [row, ...matrix];
+    matrix = [...matrix, row];
   }
-  console.log("matrix", matrix);
   return matrix;
 };
 

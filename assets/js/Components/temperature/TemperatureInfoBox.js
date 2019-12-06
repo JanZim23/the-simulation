@@ -22,7 +22,7 @@ class InfoBox extends Component {
           <div className="subtext">Total Change (C)</div>
         </div>
         <div id="right" className="box">
-          <div className="heading">{changeP.toFixed(2) + "%"}</div>
+          <div className="heading">{changeP.toFixed(4) + "%"}</div>
           <div className="subtext">Change (%)</div>
         </div>
       </div>

@@ -31,13 +31,17 @@
 
 .player-table td {
   padding: 6px;
-  font-size: 14px;
+  font-size: 17px;
   font-family: "monospace";
 }
 
 .player-table .num {
   text-align: right;
-  width: 100px;
+  width: 150px;
+}
+
+.newPlayerForm button {
+  font-size: 16pt;
 }
 
 rect#rect-0 {

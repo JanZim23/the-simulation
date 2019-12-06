@@ -250,6 +250,16 @@ class App extends React.Component {
               the simulation, the five spending categories in consideration are
               climate, welfare, security, health, and education.
               <br />
+              <br />
+              <br />
+              Once you are ready, you can start the simulation by clicking{" "}
+              <a
+                onClick={this.startSim}
+                style={{ cursor: "pointer", color: "blue" }}
+              >
+                here
+              </a>
+              .
             </div>
             <TreeMap
               height={500}
@@ -521,16 +531,6 @@ class App extends React.Component {
               <p class="c2">
                 <span class="c0"></span>
               </p>
-            </div>
-            <div style={textStyle}>
-              Once you are ready, you can start the simulation by clicking{" "}
-              <a
-                onClick={this.startSim}
-                style={{ cursor: "pointer", color: "blue" }}
-              >
-                here
-              </a>
-              .
             </div>
           </div>
         ) : (

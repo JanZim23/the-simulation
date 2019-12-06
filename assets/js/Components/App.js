@@ -216,11 +216,12 @@ class App extends React.Component {
               valueUnit={"B $"}
             />
             <Priorities setPriorities={this.setPriorities}></Priorities>
-            {this.state.gameState && (
-              <Player
-                player={this.state.gameState.players[this.state.player_id]}
-              ></Player>
-            )}
+            {this.state.gameState &&
+              this.state.gameState.players[this.state.player_id] && (
+                <Player
+                  player={this.state.gameState.players[this.state.player_id]}
+                ></Player>
+              )}
             {this.state.gameState == null || (
               <div style={{ textAlign: "left", alignSelf: "center" }}>
                 <table width={500}>

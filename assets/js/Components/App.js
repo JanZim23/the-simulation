@@ -13,7 +13,7 @@ import CostOfLivingGraph from "./cost_of_living/Graph";
 
 import socket from "../socket";
 import Priorities from "./Priorities";
-import Player from "./player";
+import Player from "./Player";
 import PlayerList from "./PlayerList";
 
 const formatDate = date => {

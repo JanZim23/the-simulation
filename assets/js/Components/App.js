@@ -370,8 +370,8 @@ class App extends React.Component {
                 <div style={textStyle}>
                   Safety, Education and Wellfare contribute greatly to the
                   wellbeing of the population. The looming doom of climate
-                  change will ultimatly also impact the happyness of citizens.
-                  Once the happyness and safety of the population falls below
+                  change will ultimatly also impact the happiness of citizens.
+                  Once the happiness and safety of the population falls below
                   50% the simulation ends. If this metric starts to rapidly drop
                   consider investing in Security, since departments such as
                   Veteran Affairs belong to it too.

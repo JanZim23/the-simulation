@@ -15,7 +15,7 @@ class InfoBox extends Component {
       <div id="data-container">
         <div id="left" className="box">
           <div className="heading">{(temp + "").substring(0, 5)} %</div>
-          <div className="subtext">World Happyness Index Percentile</div>
+          <div className="subtext">World Happiness Index Percentile</div>
         </div>
         <div id="right" className="box">
           <div className="heading">{changeP.toFixed(2) + "%"}</div>

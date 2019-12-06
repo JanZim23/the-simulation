@@ -43,7 +43,7 @@ class TemperatureGraph extends Component {
     return (
       <div className="temperature">
         <div className="row">
-          <h1>Happyness Index</h1>
+          <h1>Happiness Index</h1>
         </div>
         <div className="row">
           <InfoBox data={this.state.data} />

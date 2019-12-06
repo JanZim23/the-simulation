@@ -11,6 +11,8 @@ import SafetyGraph from "./safety/Graph";
 
 import CostOfLivingGraph from "./cost_of_living/Graph";
 
+import IncomeGraph from "./income/Graph";
+
 import socket from "../socket";
 import Priorities from "./Priorities";
 import Player from "./Player";
@@ -204,7 +206,7 @@ class App extends React.Component {
               </span>{" "}
               The government's discretionary spending totals at{" "}
               <span style={{ fontWeight: "600" }}>
-                {this.state.metrics.total_expenditures} B$
+                {(this.state.metrics.total_expenditures + "").substr(0, 5)} B$
               </span>
             </div>
             <TreeMap
@@ -262,6 +264,14 @@ class App extends React.Component {
                 <TemperatureGraph channel={this.state.channel} />
                 <CostOfLivingGraph channel={this.state.channel} />
                 <SafetyGraph channel={this.state.channel} />
+                <IncomeGraph
+                  okey="income"
+                  players={Object.values(this.state.gameState.players)}
+                />
+                <IncomeGraph
+                  okey="budget"
+                  players={Object.values(this.state.gameState.players)}
+                />
               </div>
             )}
             {this.state.gameState && (

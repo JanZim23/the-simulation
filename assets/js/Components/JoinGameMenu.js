@@ -39,9 +39,7 @@ class JoinGameMenu extends React.Component {
     channel
       .join()
       .receive("ok", resp => {
-        if (player_name !== "observer" && player_name !== "o") {
-          channel.push("sign_up", {});
-        }
+        channel.push("sign_up", {});
 
         this.props.success(channel, game_id, player_id, player_name);
       })

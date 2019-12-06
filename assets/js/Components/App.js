@@ -47,13 +47,22 @@ const formatDate = date => {
   var weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   var day = date.getDate();
+
+  var dayth = day === 1 ? "st" : day === 2 ? "nd" : day === 3 ? "rd" : "th";
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
 
   var dayOfWeek = date.getDay();
 
   return (
-    weekDays[dayOfWeek] + " " + day + " " + monthNames[monthIndex] + " " + year
+    weekDays[dayOfWeek] +
+    " the " +
+    day +
+    dayth +
+    " of " +
+    monthNames[monthIndex] +
+    " " +
+    year
   );
 };
 
@@ -61,7 +70,7 @@ export const spendingNameOf = key => {
   return key === "climate"
     ? "Climate Control"
     : key === "military"
-    ? "Military Budget"
+    ? "National Security"
     : key === "welfare"
     ? "Social Security & Welfare"
     : key === "health"
@@ -225,7 +234,7 @@ class App extends React.Component {
               <div style={{ fontSize: "100pt" }}>Simulation Ended!</div>
             ) : null}
             <div style={textStyle}>
-              It is the{" "}
+              It is{" "}
               <span style={{ fontWeight: "600" }}>
                 {this.getCurrentDate(
                   this.state.gameState ? this.state.gameState.time_tick : 0
@@ -235,21 +244,12 @@ class App extends React.Component {
               <span style={{ fontWeight: "600" }}>
                 {(this.state.metrics.total_expenditures + "").substr(0, 6)}
               </span>
-              .This simulation aims to demonstrate how complex the economy is
+              . This simulation aims to demonstrate how complex the economy is
               while also displaying how important it is to increase spending on
               the environment. Though it is obviously simplified for the sake of
               the simulation, the five spending categories in consideration are
-              climate, welfare, military, health, and education.
+              climate, welfare, security, health, and education.
               <br />
-              <br />
-              It is important to not underfund any of these categories because
-              other issues will arise. Everyone will have a say in determining
-              how to allocate the budget because climate change is not an issue
-              that just one person can tackle. As the simulation progresses, the
-              rate at which the global temperature increases or decreases will
-              change depending on how much of the budget is spent on climate.
-              However, if the global temperature increases by 1.5°C, then the
-              simulation will end. <br />
             </div>
             <TreeMap
               height={500}
@@ -258,6 +258,16 @@ class App extends React.Component {
               valueUnit={"B $"}
             />
             <div style={textStyle}>
+              <h3>Priorities</h3>
+              It is important to not underfund any of these categories because
+              other issues will arise. Everyone will have a say in determining
+              how to allocate the budget because climate change is not an issue
+              that just one person can tackle. As the simulation progresses, the
+              rate at which the global temperature increases or decreases will
+              change depending on how much of the budget is spent on climate.
+              However, if the global temperature increases by 1.5°C, then the
+              simulation will end. <br />
+              <br />
               Use the buttons below to indicate your personal priorities for
               spending. These will be averaged along with all other
               participants. As you chose priorities, other areas of spending
@@ -297,7 +307,7 @@ class App extends React.Component {
               reallocating funds to ensure that spending to support the
               environment is prioritized, we can avoid reaching the 1.5°C limit.
               <br />
-              <br />
+              <h3>Budget</h3>
               This leads to wonder why so much attention is attracted by global
               warming but so little action by governments and corperation. How
               can we as individualy hold them more accountable? The table below
@@ -325,7 +335,7 @@ class App extends React.Component {
               more than half the participants can no longer contribute, the
               simulation ends. <br />
               <br />
-              <br />
+              <h3>Tax</h3>
               This becomes more difficult as the total government spending
               increases because taxes will rise accordingly.
             </div>
@@ -362,7 +372,9 @@ class App extends React.Component {
                   wellbeing of the population. The looming doom of climate
                   change will ultimatly also impact the happyness of citizens.
                   Once the happyness and safety of the population falls below
-                  50% the simulation ends.
+                  50% the simulation ends. If this metric starts to rapidly drop
+                  consider investing in Security, since departments such as
+                  Veteran Affairs belong to it too.
                 </div>
                 <SafetyGraph channel={this.state.channel} />
                 <div style={textStyle}>

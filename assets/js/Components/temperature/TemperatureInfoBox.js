@@ -14,7 +14,7 @@ class InfoBox extends Component {
     return (
       <div id="data-container">
         <div id="left" className="box">
-          <div className="heading">{(14 + temp + "").substring(0, 5)}</div>
+          <div className="heading">{(14.97 + temp + "").substring(0, 5)}</div>
           <div className="subtext">Glob. Avg. Temp. (C)</div>
         </div>
         <div id="middle" className="box">

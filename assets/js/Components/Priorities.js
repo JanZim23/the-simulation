@@ -110,7 +110,7 @@ class Priorities extends React.Component {
             }}
             onClick={this.addMilitary}
           >
-            + Military
+            + Security
           </button>
           <button
             style={{

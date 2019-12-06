@@ -18,7 +18,7 @@ defmodule Sim.Game.Player do
       |> Map.keys()
 
     spending =
-      (all_pris -- priorities)
+      (all_pris -- (priorities ++ ["welfare", "military", "health"]))
       |> Enum.take(length(priorities))
       |> Enum.reduce(spending, &scew_spending_down(player, &1, &2, player_count))
 
@@ -33,7 +33,7 @@ defmodule Sim.Game.Player do
 
   defp scew_spending_down(%__MODULE__{budget: budget}, priority, spending, player_count) do
     spending
-    |> Map.update!(priority, fn d -> d - calc_impact(budget, player_count) end)
+    |> Map.update!(priority, fn d -> d - calc_impact(budget, player_count) * 1.3 end)
   end
 
   def update_priorities(%__MODULE__{} = player, priorities) do
@@ -44,7 +44,7 @@ defmodule Sim.Game.Player do
   end
 
   defp calc_impact(budget, player_count) do
-    budget / 5 / 50 / player_count
+    1000 / 5 / 270 / player_count
   end
 
   def update_budgets(players, metrics) do

@@ -1,19 +1,21 @@
 import React from "react";
 
-const pColor = p => {
+import { spendingNameOf } from "./App";
+
+export const pColor = p => {
   switch (p) {
     case "climate":
-      return "green";
+      return "rgba(97, 250, 92, 0.92)";
     case "military":
-      return "red";
+      return "rgba(250, 97, 92, 0.92)";
     case "welfare":
-      return "blue";
+      return "rgba(92, 247, 250, 0.92)";
     case "education":
-      return "orange";
+      return "rgba(250, 166, 92, 0.92)";
     case "health":
-      return "purple";
+      return "rgba(234, 92, 250, 0.92)";
     default:
-      return "grey";
+      return "rgba(171, 171, 171, 0.92)";
   }
 };
 
@@ -36,9 +38,14 @@ class Priorities extends React.Component {
 
   remove(inx) {
     this.setState(state => {
-      priorities: state.priorities.splice(inx, 1);
+      var newP = [...state.priorities];
+      newP.splice(inx, 1);
+      return { priorities: newP };
     });
-    this.props.setPriorities(this.state.priorities.splice(inx, 1));
+    var newP = [...this.state.priorities];
+    newP.splice(inx, 1);
+    priorities: newP;
+    this.props.setPriorities(newP);
   }
 
   addClimate() {
@@ -72,11 +79,61 @@ class Priorities extends React.Component {
     return (
       <div>
         <div>
-          <button onClick={this.addClimate}>Climate</button>
-          <button onClick={this.addEducation}>Education</button>
-          <button onClick={this.addMilitary}>Military</button>
-          <button onClick={this.addWelfare}>Welfare</button>
-          <button onClick={this.addHealth}>Health</button>
+          <button
+            style={{
+              backgroundColor: pColor("climate"),
+              padding: "4px",
+              margin: "4px",
+              fontSize: "16pt"
+            }}
+            onClick={this.addClimate}
+          >
+            + Climate
+          </button>
+          <button
+            style={{
+              backgroundColor: pColor("education"),
+              padding: "4px",
+              margin: "4px",
+              fontSize: "16pt"
+            }}
+            onClick={this.addEducation}
+          >
+            + Education
+          </button>
+          <button
+            style={{
+              backgroundColor: pColor("military"),
+              padding: "4px",
+              margin: "4px",
+              fontSize: "16pt"
+            }}
+            onClick={this.addMilitary}
+          >
+            + Military
+          </button>
+          <button
+            style={{
+              backgroundColor: pColor("welfare"),
+              padding: "4px",
+              margin: "4px",
+              fontSize: "16pt"
+            }}
+            onClick={this.addWelfare}
+          >
+            + Welfare
+          </button>
+          <button
+            style={{
+              backgroundColor: pColor("health"),
+              padding: "4px",
+              margin: "4px",
+              fontSize: "16pt"
+            }}
+            onClick={this.addHealth}
+          >
+            + Health
+          </button>
         </div>
         <div>
           {this.state.priorities.map((p, inx) => (
@@ -84,11 +141,12 @@ class Priorities extends React.Component {
               style={{
                 backgroundColor: pColor(p),
                 padding: "5px",
-                margin: "5px"
+                margin: "5px",
+                fontSize: "12pt"
               }}
               onClick={() => this.remove(inx)}
             >
-              Priority {inx + 1}: {p}
+              Priority {inx + 1}: {spendingNameOf(p)}
             </div>
           ))}
         </div>

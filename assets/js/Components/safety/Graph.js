@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../App.css";
+import "../../App.css";
 import LineChart from "./LineChart";
 import ToolTip from "./ToolTip";
 import InfoBox from "./InfoBox";
@@ -10,7 +10,7 @@ class TemperatureGraph extends Component {
     this.onTick = this.onTick.bind(this);
     this.state = {
       fetchingData: true,
-      data: [{ x: 0, y: 0 }],
+      data: [{ x: 0, y: 99 }],
       hoverLoc: null,
       activePoint: null,
       channel: props.channel
@@ -31,7 +31,7 @@ class TemperatureGraph extends Component {
 
     newData.push({
       x: newData.length,
-      y: game_state.metrics.global_temp
+      y: game_state.metrics.safety
     });
     this.setState({
       data: newData,
@@ -43,7 +43,7 @@ class TemperatureGraph extends Component {
     return (
       <div className="temperature">
         <div className="row">
-          <h1>Global Temperature</h1>
+          <h1>Happyness Index</h1>
         </div>
         <div className="row">
           <InfoBox data={this.state.data} />

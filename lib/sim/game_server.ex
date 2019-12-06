@@ -5,7 +5,7 @@ defmodule Sim.GameServer do
 
   defstart start(id), gen_server_opts: [name: {:via, Registry, {Sim.GameRegistry, id}}] do
     {:ok, tref} =
-      :timer.apply_interval(1_000, __MODULE__, :tick, [{:via, Registry, {Sim.GameRegistry, id}}])
+      :timer.apply_interval(100, __MODULE__, :tick, [{:via, Registry, {Sim.GameRegistry, id}}])
 
     %State{id: id, tick_timer: tref}
     |> initial_state()

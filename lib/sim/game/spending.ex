@@ -7,12 +7,14 @@ defmodule Sim.Game.Spending do
 
   use ExConstructor
 
+  @tick_comp 10
+
   @d %{
-    tax: {2740, 0.1, 21},
+    tax: {2770, 0.1, 21},
     total_expenditures: {0.0, 1.0, 0},
-    global_temp: [{:climate, 500, 0.002}, {:education, 80, 0.001}],
-    safety: [{:military, 500, -0.13}, {:education, 70, -0.01}, {:welfare, 900, -0.003}],
-    cost_of_living: [{:health, 1500, 0.10}, {:welfare, 750, 0.09}, {:education, 150, 0.08}]
+    global_temp: [{:climate, 700, 0.0005}, {:education, 100, 0.0004}],
+    safety: [{:military, 500, -0.053}, {:education, 90, -0.01}, {:welfare, 1200, -0.003}],
+    cost_of_living: [{:health, 1500, 0.10}, {:welfare, 950, 0.09}, {:education, 150, 0.09}]
   }
 
   def get_delta_change(%{} = deltas) do
@@ -46,7 +48,7 @@ defmodule Sim.Game.Spending do
   # the lower spending is than target, the
   # more spending than target will make
   def calc_change({key, t, c}, spending, current) do
-    (t - Map.get(spending, key, 0)) * (c / 60) + current
+    (t - Map.get(spending, key, 0)) * (c / 60) * (1 / @tick_comp) + current
   end
 
   def adjust_spending(spending, priority_spending) do

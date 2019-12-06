@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../css/LineChart.css";
+import "../../css/LineChart.css";
 
 class LineChart extends Component {
   constructor(props) {
@@ -21,8 +21,8 @@ class LineChart extends Component {
     const { data } = this.props;
 
     return {
-      min: 0,
-      max: 1.5
+      min: 50,
+      max: 100
     };
   }
   // GET SVG COORDINATES

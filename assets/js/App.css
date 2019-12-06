@@ -29,6 +29,17 @@
   pointer-events: auto;
 }
 
+.player-table td {
+  padding: 6px;
+  font-size: 14px;
+  font-family: "monospace";
+}
+
+.player-table .num {
+  text-align: right;
+  width: 100px;
+}
+
 rect#rect-0 {
   fill: green;
 }

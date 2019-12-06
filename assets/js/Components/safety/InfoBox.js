@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../css/InfoBox.css";
+import "../../css/InfoBox.css";
 
 class InfoBox extends Component {
   constructor(props) {
@@ -14,12 +14,8 @@ class InfoBox extends Component {
     return (
       <div id="data-container">
         <div id="left" className="box">
-          <div className="heading">{(14 + temp + "").substring(0, 5)}</div>
-          <div className="subtext">Glob. Avg. Temp. (C)</div>
-        </div>
-        <div id="middle" className="box">
-          <div className="heading">{change.toString()}</div>
-          <div className="subtext">Total Change (C)</div>
+          <div className="heading">{(temp + "").substring(0, 5)} %</div>
+          <div className="subtext">World Happyness Index Percentile</div>
         </div>
         <div id="right" className="box">
           <div className="heading">{changeP.toFixed(2) + "%"}</div>

@@ -6,25 +6,77 @@ import TreeMap from "react-d3-treemap";
 import "react-d3-treemap/dist/react.d3.treemap.css";
 // import LineGraph from "./Components/LineGraph";
 import JoinGameMenu from "./JoinGameMenu";
-import TemperatureGraph from "./TemperatureGraph";
+import TemperatureGraph from "./temperature/TemperatureGraph";
+import SafetyGraph from "./safety/Graph";
+
+import CostOfLivingGraph from "./cost_of_living/Graph";
+
 import socket from "../socket";
 import Priorities from "./Priorities";
+import Player from "./player";
+import PlayerList from "./PlayerList";
+
+const formatDate = date => {
+  var monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  var weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+
+  var dayOfWeek = date.getDay();
+
+  return (
+    weekDays[dayOfWeek] + " " + day + " " + monthNames[monthIndex] + " " + year
+  );
+};
+
+export const spendingNameOf = key => {
+  return key === "climate"
+    ? "Climate Control"
+    : key === "military"
+    ? "Military Budget"
+    : key === "welfare"
+    ? "Social Security & Welfare"
+    : key === "health"
+    ? "Medicare & Medicade & Health"
+    : key === "education"
+    ? "Education"
+    : key === "treasury"
+    ? "Dept. Treasury"
+    : key === "veteran"
+    ? "Veteran Affairs"
+    : key === "agriculture"
+    ? "Dept. Agriculture"
+    : key === "transportation"
+    ? "Dept. Transportation"
+    : key === "hud"
+    ? "Housing and Urban Dev."
+    : key === "labor"
+    ? "Department of Labour"
+    : key === "doj"
+    ? "Dept. Justice"
+    : "Misc.";
+};
 
 const map_spending_to_data = spending => {
   //console.log(spending);
   let children = Object.keys(spending).map(key => {
-    var spending_name =
-      key === "climate"
-        ? "Climate Control"
-        : key === "military"
-        ? "Military Budget"
-        : key === "welfare"
-        ? "Social Security & Welfare"
-        : key === "health"
-        ? "Medicare & Medicade & Health"
-        : key === "education"
-        ? "Education"
-        : "Misc.";
+    var spending_name = spendingNameOf(key);
 
     return {
       name: spending_name,
@@ -32,8 +84,17 @@ const map_spending_to_data = spending => {
     };
   });
   return {
-    children,
-    name: "Spending"
+    name: "Spending",
+    children: [
+      ...children,
+      //{ name: spendingNameOf("treasury"), value: 1000 },
+      //{ name: spendingNameOf("veteran"), value: 216 },
+      { name: spendingNameOf("agriculture"), value: 204 },
+      { name: spendingNameOf("transportation"), value: 98 },
+      { name: spendingNameOf("hud"), value: 62 },
+      { name: spendingNameOf("labor"), value: 49 },
+      { name: spendingNameOf("doj"), value: 42 }
+    ]
   };
 };
 
@@ -57,7 +118,8 @@ class App extends React.Component {
       game: null,
       channel: null,
       errorMsg: null,
-      gameState: null
+      gameState: null,
+      player_id: null
     };
   }
 
@@ -119,6 +181,10 @@ class App extends React.Component {
     this.state.channel.push("update_priorities", { priorities });
   }
 
+  getCurrentDate(tick) {
+    return formatDate(new Date(Date.now() + tick * 1000 * 60 * 60 * 24));
+  }
+
   render() {
     //console.log("new render", this.state);
     return (
@@ -129,15 +195,30 @@ class App extends React.Component {
 
         {this.state.gameState != null ? (
           <div className={this.state.loggedIn ? "game" : "pre-game"}>
-            The government is spending a total of{" "}
-            {this.state.metrics.total_expenditures} B$
+            <div style={{ fontSize: "16pt" }}>
+              It is the date of{" "}
+              <span style={{ fontWeight: "600" }}>
+                {this.getCurrentDate(
+                  this.state.gameState ? this.state.gameState.time_tick : 0
+                )}
+              </span>{" "}
+              The government's discretionary spending totals at{" "}
+              <span style={{ fontWeight: "600" }}>
+                {this.state.metrics.total_expenditures} B$
+              </span>
+            </div>
             <TreeMap
               height={500}
-              width={500}
+              width={1000}
               data={this.state.spending}
               valueUnit={"B $"}
             />
             <Priorities setPriorities={this.setPriorities}></Priorities>
+            {this.state.gameState && (
+              <Player
+                player={this.state.gameState.players[this.state.player_id]}
+              ></Player>
+            )}
             {this.state.gameState == null || (
               <div style={{ textAlign: "left", alignSelf: "center" }}>
                 <table width={500}>
@@ -177,44 +258,17 @@ class App extends React.Component {
               <div style={{ fontSize: "100pt" }}>Simulation Ended!</div>
             ) : null}
             {this.state.gameState == null || (
-              <TemperatureGraph channel={this.state.channel} />
+              <div>
+                <TemperatureGraph channel={this.state.channel} />
+                <CostOfLivingGraph channel={this.state.channel} />
+                <SafetyGraph channel={this.state.channel} />
+              </div>
             )}
-            <div style={{ padding: "10px" }}>
-              <h3>Budget</h3>
-              <input
-                type="text"
-                placeholder="Climate"
-                id="climate"
-                style={{ width: "200px" }}
-              />
-              <input
-                type="text"
-                placeholder="Welfare"
-                id="welfare"
-                style={{ width: "200px" }}
-              />
-              <input
-                type="text"
-                placeholder="Military"
-                id="military"
-                style={{ width: "200px" }}
-              />
-              <input
-                type="text"
-                placeholder="Health"
-                id="health"
-                style={{ width: "200px" }}
-              />
-              <input
-                type="text"
-                placeholder="Education"
-                id="education"
-                style={{ width: "200px" }}
-              />
-              <button onClick={() => this.postNewBudget()}>
-                Propose Budget
-              </button>
-            </div>
+            {this.state.gameState && (
+              <PlayerList
+                players={Object.values(this.state.gameState.players)}
+              ></PlayerList>
+            )}
           </div>
         ) : (
           <div className="login">

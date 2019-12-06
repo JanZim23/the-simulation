@@ -8,6 +8,7 @@ defmodule Sim.Game.State do
     :id,
     :tick_timer,
     tick: 0,
+    time_tick: 0,
     started?: false,
     direct_democracy?: true,
     spending: %Spending{},
@@ -96,6 +97,7 @@ defmodule Sim.Game.State do
   def tick(%__MODULE__{} = state) do
     state
     |> Map.update!(:tick, &(&1 + 1))
+    |> update_time_tick()
     |> update_priority_for_dd()
     |> scew_spending()
     |> calc_deltas()
@@ -105,6 +107,12 @@ defmodule Sim.Game.State do
     |> check_game_over()
     |> Messages.broadcast_tick()
   end
+
+  def update_time_tick(%__MODULE__{started?: true} = state) do
+    Map.update!(state, :time_tick, &(&1 + 1))
+  end
+
+  def update_time_tick(state), do: state
 
   def calc_deltas(%__MODULE__{spending: spending} = state) do
     state
@@ -193,9 +201,12 @@ defmodule Sim.Game.State do
   end
 
   defp determine_spending(%__MODULE__{players: players, spending: spending}) do
-    Enum.reduce(players, spending, &Player.scew_spending(&1, &2, map_size(players)))
+    players
+    |> Enum.reject(fn {_, pl} -> Player.game_over?(pl) end)
+    |> Enum.reduce(spending, &Player.scew_spending(&1, &2, map_size(players)))
   end
 
+  @spec export(atom | %{:__struct__ => atom, optional(atom) => any}) :: map
   def export(state) do
     state
     |> Map.from_struct()

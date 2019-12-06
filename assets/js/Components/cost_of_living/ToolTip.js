@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../css/ToolTip.css";
+import "../../css/ToolTip.css";
 
 class ToolTip extends Component {
   render() {
@@ -15,8 +15,8 @@ class ToolTip extends Component {
 
     return (
       <div className="hover" style={placementStyles}>
-        <div className="date">{activePoint.x}</div>
-        <div className="price">{activePoint.y}</div>
+        <div className="tick">{activePoint.x}</div>
+        <div className="temp">{activePoint.y}</div>
       </div>
     );
   }

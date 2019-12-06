@@ -12,7 +12,7 @@ defmodule Sim.Game.Metrics do
     |> Map.from_struct()
     |> Map.keys()
     |> Enum.reduce(metrics, fn key, m ->
-      Map.update!(m, key, &Float.round(Map.get(deltas, key, 0).(&1), 3))
+      Map.update!(m, key, &Float.round(Map.get(deltas, key, 0).(&1), 5))
     end)
     |> __MODULE__.new()
   end

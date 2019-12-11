@@ -1,6 +1,14 @@
-# Sim
+# The Simulation
 
-## Planning
+Welcome and thank you for your interest in the simulation.
+
+# Overview
+
+The main front end code is at [/assets/js/Components/App.js](/assets/js/Components/App.js)
+
+The game logic is in [/lib/sim/game/state.ex](/lib/sim/game/state.ex)
+
+## Outdated Planning Documents
 
 - Phases
   - Sign Up (Select Preferences)
@@ -20,7 +28,7 @@ Spending:
 - Welfare
 - Climate
 - Health
-- Military
+- Security
 - Education
 
 ## Simulation Principles
@@ -52,11 +60,11 @@ The functions that are applied on every tick are determined by the following tra
 
 ```elixir
   %{
-    tax: {2740, 0.1, 21}, # For every dollar that the expenditure is over 2740 tax increases by 0.1 percent, starting at 21 %
+   tax: {2770, 0.07, 21},
     total_expenditures: {0.0, 1.0, 0},
-    global_temp: [{:climate, 500, 0.0005}, {:education, 150, 0.0001}],
-    safety: [{:military, 500, -0.07}, {:education, 70, -0.001}, {:welfare, 900, -0.003}],
-    cost_of_living: [{:health, 1500, 0.10}, {:welfare, 700, 0.09}, {:education, 150, 0.08}]
+    global_temp: [{:climate, 700, 0.00048}, {:education, 200, 0.00035}],
+    safety: [{:military, 500, -0.053}, {:education, 90, -0.01}, {:welfare, 1200, -0.003}],
+    cost_of_living: [{:health, 1500, 0.10}, {:welfare, 950, 0.09}, {:education, 150, 0.09}]
   }
 ```
 
@@ -74,9 +82,11 @@ Admin Controls:
 - next action
 - end game
 
-Flow:
+### Flow
 
-- Citizens have income (random) ((x/5 + 3)^7)/12 where 0 < x < 10
+The below was the original idea for implementing a simulated government. We chose not go with this and go for a 'direct democracy' istead to reduce complexity and usability.
+
+- Citizens have income exponential income distribution ((x/5 + 3)^7)/12 where 0 < x < 10 and 0-10 is an even distribution.
 
 - The president changes the spending
 

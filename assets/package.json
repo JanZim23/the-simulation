@@ -15,7 +15,7 @@
     "react": "^16.12.0",
     "react-d3-treemap": "1.0.15",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.2.0",
+    "react-scripts": "3.4.4",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.2"
   },
@@ -41,6 +41,6 @@
     ]
   },
   "devDependencies": {
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   }
 }
